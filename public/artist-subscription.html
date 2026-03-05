@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artist Subscription | ArtNest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e3f0ff, #faf8f8, #e8f5f1);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    .glass-container {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(14px);
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 900px;
+      padding: 40px;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #214436;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p.center {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 500;
+      color: #214436;
+    }
+
+    input, select {
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 1.5px solid #cfd8d3;
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #f2c14e;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+
+    .plan-summary {
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 15px 20px;
+      border-radius: 15px;
+      text-align: center;
+      color: #214436;
+      font-weight: 600;
+    }
+
+
+    .payment-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .payment-option {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.18s;
+      color: #214436;
+      border: 1.2px solid rgba(255, 255, 255, 0.3);
+      font-weight: 500;
+    }
+
+    .payment-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+    }
+
+    .payment-option.active {
+      background: rgba(242, 193, 78, 0.35);
+      border-color: #f2c14e;
+      color: #111;
+      transform: translateY(-2px);
+    }
+
+    .payment-option i { font-size: 1.1rem; }
+
+
+    .payment-fields {
+      display: none;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .payment-fields label {
+      font-size: 0.9rem;
+      color: #214436;
+      display:block;
+      margin-top:10px;
+    }
+
+
+    button[type="submit"] {
+      margin-top: 10px;
+      padding: 14px;
+      border: none;
+      border-radius: 50px;
+      background: #214436;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #193625;
+    }
+
+    a.back-link {
+      text-align: center;
+      color: #214436;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    a.back-link:hover { color: #f2c14e; }
+
+
+    .confirmation { display: none; text-align: center; color: #214436; background: rgba(255,255,255,0.25); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.35); }
+    .receipt { background: rgba(255,255,255,0.2); padding: 14px; border-radius: 12px; display:inline-block; text-align:left; margin-top:10px; }
+    .receipt p { margin:6px 0; }
+
+    @media (max-width: 700px) {
+      .glass-container { padding: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glass-container" id="subscriptionContainer">
+    <h2><i class="fa-solid fa-palette"></i> Artist Subscription</h2>
+    <p class="center">Complete your subscription below to join ArtNest and start your creative journey!</p>
+
+
+    <div class="plan-summary" id="planSummary">Loading your plan details...</div>
+
+    <form id="subscriptionForm" novalidate>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your full name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <label>Payment Method</label>
+      <div class="payment-options" id="paymentOptions">
+        <div class="payment-option" data-method="UPI"><i class="fa-brands fa-google-pay"></i> UPI / GPay</div>
+        <div class="payment-option" data-method="Card"><i class="fa-solid fa-credit-card"></i> Debit / Credit Card</div>
+        <div class="payment-option" data-method="PayPal"><i class="fa-brands fa-paypal"></i> PayPal</div>
+        <div class="payment-option" data-method="NetBanking"><i class="fa-solid fa-wallet"></i> Net Banking</div>
+      </div>
+
+      <div class="payment-fields" id="paymentFields"></div>
+
+      <button type="submit">Complete Payment</button>
+    </form>
+
+    <div class="confirmation" id="confirmation">
+      <h3>Payment Successful 🎉</h3>
+      <p>Thank you for joining the ArtNest community!</p>
+      <div class="receipt" id="receipt"></div>
+      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const params = new URLSearchParams(window.location.search);
+      const plan = (params.get('plan') || 'basic').toLowerCase();
+
+      const planDetails = {
+        basic: { name: "Basic", price: 199 },
+        pro: { name: "Pro", price: 499 },
+        premium: { name: "Premium", price: 899 }
+      };
+
+      const selectedPlan = planDetails[plan] || planDetails.basic;
+      const planSummary = document.getElementById('planSummary');
+      planSummary.textContent = `You selected the ${selectedPlan.name} Plan – ₹${selectedPlan.price}/month`;
+
+ 
+      const paymentTemplates = {
+        UPI: `
+          <label for="upiId">Enter UPI ID</label>
+          <input type="text" id="upiId" placeholder="example@upi" required />
+        `,
+        Card: `
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
+          <label for="cardName">Card Holder Name</label>
+          <input type="text" id="cardName" placeholder="Name on card" required />
+          <label for="expiry">Expiry Date</label>
+          <input type="month" id="expiry" required />
+          <label for="cvv">CVV</label>
+          <input type="password" id="cvv" maxlength="4" placeholder="***" required />
+        `,
+        PayPal: `
+          <label for="paypalEmail">PayPal Email</label>
+          <input type="email" id="paypalEmail" placeholder="yourpaypal@example.com" required />
+        `,
+        NetBanking: `
+          <label for="bank">Select Bank</label>
+          <select id="bank" required>
+            <option value="">--Choose Bank--</option>
+            <option>HDFC Bank</option>
+            <option>ICICI Bank</option>
+            <option>Axis Bank</option>
+            <option>SBI</option>
+            <option>Kotak Mahindra</option>
+          </select>
+          <label for="accountNumber">Account Number</label>
+          <input type="text" id="accountNumber" maxlength="20" placeholder="Enter account number" required />
+        `
+      };
+
+      const paymentOptionsEl = document.getElementById('paymentOptions');
+      const paymentFields = document.getElementById('paymentFields');
+      let chosenMethod = null;
+
+      paymentOptionsEl.addEventListener('click', (e) => {
+        const option = e.target.closest('.payment-option');
+        if (!option) return;
+
+        document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+        option.classList.add('active');
+
+        chosenMethod = option.dataset.method;
+        paymentFields.style.display = 'block';
+        paymentFields.innerHTML = paymentTemplates[chosenMethod] || '';
+
+        const firstInput = paymentFields.querySelector('input, select');
+        if (firstInput) firstInput.focus();
+      });
+
+
+      const form = document.getElementById('subscriptionForm');
+      const confirmation = document.getElementById('confirmation');
+      const receipt = document.getElementById('receipt');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = (document.getElementById('name') || {}).value || '';
+        const email = (document.getElementById('email') || {}).value || '';
+
+        if (!chosenMethod) {
+          alert('Please select a payment method.');
+          return;
+        }
+
+
+        const requiredFields = paymentFields.querySelectorAll('input[required], select[required]');
+        for (let rf of requiredFields) {
+          if (!rf.value.trim()) {
+            rf.focus();
+            alert('Please complete the payment details.');
+            return;
+          }
+        }
+
+
+        form.style.display = 'none';
+        planSummary.style.display = 'none';
+        confirmation.style.display = 'block';
+
+
+        receipt.innerHTML = `
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Plan:</strong> ${selectedPlan.name}</p>
+          <p><strong>Amount Paid:</strong> ₹${selectedPlan.price}</p>
+          <p><strong>Payment Method:</strong> ${escapeHtml(chosenMethod)}</p>
+        `;
+      });
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+    });
+  </script>
+</body>
+</html>

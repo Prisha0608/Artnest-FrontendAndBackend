@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArtNest Gallery</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ===== Reset & Base ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ===== Navbar ===== */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #cfe698, #286743);
+      padding: 15px 30px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav h1 {
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      transition: max-height 0.4s ease;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #f5e3b2; }
+
+    .cart-page-btn {
+      background: #f5e3b2;
+      border: none;
+      border-radius: 30px;
+      padding: 8px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #286743;
+      transition: 0.3s;
+    }
+    .cart-page-btn:hover { background: white; }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* ===== Hero ===== */
+    #pic {
+      background: linear-gradient(135deg, #cfe698, #286743);
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 600;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== Trending Section ===== */
+    .trend {
+      padding: 60px 20px;
+      text-align: center;
+      background: white;
+    }
+    .trend h1 {
+      font-size: 2rem;
+      color: #286743;
+      margin-bottom: 30px;
+    }
+
+    .trending-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      width: 90%;
+      margin: 0 auto;
+    }
+    .trending-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .trending-card:hover { transform: scale(1.05); }
+    .trending-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .trending-card h3 { margin: 12px 0 5px; color: #286743; }
+    .trending-card .price { margin-bottom: 10px; color: #444; }
+    .trending-card .cart-btn {
+      background: #286743;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .trending-card .cart-btn:hover { background: #1f4d33; }
+
+    /* ===== Category Sections ===== */
+    .category {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .category h2 {
+      font-size: 1.8rem;
+      color: #286743;
+      margin-bottom: 25px;
+    }
+    .info-card {
+      background: #fff9f5;
+      border-radius: 16px;
+      padding: 20px;
+      width: 90%;
+      margin: 0 auto 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .info-card:hover { transform: scale(1.03); }
+    .info-card p { color: #444; }
+
+    /* Slider */
+    .slider {
+      position: relative;
+      overflow: hidden;
+      width: 90%;
+      margin: 0 auto;
+    }
+    .slider-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      gap: 20px;
+    }
+    .slide {
+      min-width: 250px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 15px;
+    }
+    .slide img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .slide h4 { margin: 10px 0 5px; }
+    .slide p { color: #444; font-weight: bold; }
+    .slide button {
+      background-color: #286743;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .slide button:hover { background-color: #1f4d33; }
+
+    .slider button.prev,
+    .slider button.next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(40, 103, 67, 0.9);
+      border: none;
+      color: white;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      z-index: 10;
+      transition: 0.3s;
+    }
+    .slider button.prev:hover, .slider button.next:hover { background: #1f4d33; }
+    .slider button.prev { left: 10px; }
+    .slider button.next { right: 10px; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #286743;
+      color: white;
+      padding: 60px 0 20px;
+      text-align: center;
+    }
+    .footer-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+      text-align: left;
+      width: 90%;
+      margin: auto;
+    }
+    .footer-col h4, .footer-col h2 { margin-bottom: 15px; }
+    .footer-col p, .footer-col ul { font-size: 0.95rem; line-height: 1.6; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: #f5e3b2; }
+    .socials a {
+      color: white;
+      font-size: 1.3rem;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+    .socials a:hover { color: #f5e3b2; }
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin-top: 40px;
+      padding-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 992px) {
+      #pic { font-size: 2rem; height: 300px; }
+      .trending-card img { height: 180px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; }
+      .menu-toggle { display: block; }
+      nav ul {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        width: 100%;
+        background: #286743;
+        border-top: 1px solid rgba(255,255,255,0.2);
+      }
+      nav ul.show { max-height: 300px; }
+      nav ul li, nav button { margin: 10px 0; }
+      #pic { font-size: 1.8rem; height: 250px; padding: 0 10px; }
+      .slider button.prev, .slider button.next {
+        width: 35px; height: 35px; font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav h1 { font-size: 1.4rem; }
+      #pic { font-size: 1.5rem; height: 220px; }
+      .trending-card img { height: 150px; }
+      .trend h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <nav>
+    <h1><i class="fas fa-palette"></i> ArtNest</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul id="menu">
+      <li><a href="h.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="Gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
+      <li><a href="letstalk.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <button onclick="goToCart()" class="cart-page-btn">🛒 View Cart</button>
+    </ul>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section id="pic">
+    
+    <div><h1>“Buy. Create. Inspire.”</h1></div>
+
+  </section>
+
+  <!-- ===== Trending ===== -->
+  <section class="trend">
+    <h1>🔥 Trending Arts</h1>
+    <div class="trending-container">
+      <div class="trending-card">
+        <img src="resin2.jpeg" alt="Trending 1" />
+        <h3>Resin Bliss</h3>
+        <p class="price">₹1,000</p>
+        <button class="cart-btn" onclick="addToCart('Resin Bliss', 1000,'resin2.jpeg')">Add to Cart</button>
+      </div>
+      <div class="trending-card">
+        <img src="painting4.jpeg" alt="Trending 2" />
+        <h3>Night Ball</h3>
+        <p class="price">₹4,800</p>
+        <button class="cart-btn" onclick="addToCart('Night Ball', 4800,'painting4.jpeg')">Add to Cart</button>
+      </div>
+      <div class="trending-card">
+        <img src="crochet5.jpeg" alt="Trending 3" />
+        <h3>Purple Frame</h3>
+        <p class="price">₹1,500</p>
+        <button class="cart-btn" onclick="addToCart('Purple Frame', 1500,'crochet5.jpeg')">Add to Cart</button>
+      </div>
+      <div class="trending-card">
+        <img src="abstract3.jpeg" alt="Trending 4" />
+        <h3>Jokers Whisper</h3>
+        <p class="price">₹2,800</p>
+        <button class="cart-btn" onclick="addToCart('Jokers Whisper', 2800,'abstract3.jpeg')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- Category 1: Landscape -->
+  <section class="category">
+    <h2>Paintings</h2>
+    <div class="info-card">
+      <h3>About Paintings</h3>
+      <p>“Every brushstroke tells a story of imagination and beauty.”</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="painting1.jpeg"><h4>Green Valley</h4><p>₹2,500</p><button class="cart-btn" onclick="addToCart('Green Valley', 2500,'painting1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="painting2.jpeg"><h4>Calm River</h4><p>₹1,800</p><button class="cart-btn" onclick="addToCart('Calm River', 1800,'painting2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="painting3.jpeg"><h4>Night Peaks</h4><p>₹2,100</p><button class="cart-btn" onclick="addToCart('Night Peaks', 2100,'painting3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="painting4.jpeg"><h4>Night Ball</h4><p>₹4,800</p><button class="cart-btn" onclick="addToCart('Night Ball', 4800,'painting4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="painting5.jpeg"><h4>Bar Brew</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Bar Brew', 2200,'painting5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+
+    <!-- Category 2: Abstract -->
+  <section class="category">
+    <h2>Abstract Art</h2>
+    <div class="info-card">
+      <h3>About Abstract Art</h3>
+      <p>“Abstract art speaks the language of emotion through colors, shapes, and freedom.”</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="abstract1.jpeg"><h4>Color Burst</h4><p>₹1,900</p><button class="cart-btn" onclick="addToCart('Color Burst', 1900,'abstract1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="abstract2.jpeg"><h4>Dream Flow</h4><p>₹2,000</p><button class="cart-btn" onclick="addToCart('Dream Flow', 2000,'abstract2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="abstract3.jpeg"><h4>Jokers Whisper</h4><p>₹2,800</p><button class="cart-btn" onclick="addToCart('Jokers Whisper', 2800,'abstract3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="abstract4.jpeg"><h4>Flora</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Flora', 2200,'abstract4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="abstract5.jpeg"><h4>Vision Wave</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Vision Wave', 2200,'abstract5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+  <!-- Category 3: Portrait -->
+  <section class="category">
+    <h2>Portrait Art</h2>
+    <div class="info-card">
+      <h3>About Portrait Art</h3>
+      <p>"Portraits capture emotions, expressions, and stories — adding depth and life to any collection."</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="portrait1.jpeg"><h4>Graceful Lady</h4><p>₹5,000</p><button class="cart-btn" onclick="addToCart('Graceful Lady',5000,'portrait1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="portrait2.jpeg"><h4>Gentle Smile</h4><p>₹5,300</p><button class="cart-btn" onclick="addToCart('Gentle Smile', 5300,'portrait2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="portrait3.jpeg"><h4>Mystic Gaze</h4><p>₹4,700</p><button class="cart-btn" onclick="addToCart('Mystic Gaze', 4700,'portrait3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="portrait4.jpeg"><h4>Catty</h4><p>₹5,200</p><button class="cart-btn" onclick="addToCart('Catty', 5200,'portrait4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="portrait5.jpeg"><h4>Golden</h4><p>₹6,200</p><button class="cart-btn" onclick="addToCart('Golden', 6200,'portrait5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+  <!--Category 4:-->
+  <section class="category">
+    <h2>Sculptures</h2>
+    <div class="info-card">
+      <h3>About Sculptures</h3>
+      <p>"Sculptures transform raw materials into timeless forms — each curve and texture telling a story carved in stone, metal, or clay."</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="sculpture1.jpeg"><h4>The Lady</h4><p>₹1,500</p><button class="cart-btn" onclick="addToCart('The Lady', 1500,'sculpture1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="sculpture2.jpeg"><h4>Hold</h4><p>₹1,800</p><button class="cart-btn" onclick="addToCart('Hold', 1800,'sculpture2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="sculpture3.jpeg"><h4>Pink Peaks</h4><p>₹2,100</p><button class="cart-btn" onclick="addToCart('Pink Peaks', 2100,'sculpture3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="sculpture4.jpeg"><h4>Green Wave</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Green Wave', 2200,'sculpture4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="sculpture5.jpeg"><h4>Mixed</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Mixed', 2200,'sculpture5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+  <!--Category 5:-->
+  <section class="category">
+    <h2>Resin art</h2>
+    <div class="info-card">
+      <h3>About Resin Art</h3>
+      <p>"Inspired by oceans and flow, resin art freezes the beauty of movement and color into timeless designs."</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="resin1.jpeg"><h4>Tray</h4><p>₹1,000</p><button class="cart-btn" onclick="addToCart('Tray', 1000,'resin1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="resin2.jpeg"><h4>Resin Bliss</h4><p>₹1,000</p><button class="cart-btn" onclick="addToCart('Resin Bliss', 1000,'resin2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="resin3.jpeg"><h4>Bracelet</h4><p>₹500</p><button class="cart-btn" onclick="addToCart('Bracelet', 500,'resin3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="resin4.jpeg"><h4>Flower Tray</h4><p>₹1,100</p><button class="cart-btn" onclick="addToCart('Flower Tray', 1100,'resin4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="resin5.jpeg"><h4>Rings</h4><p>₹400</p><button class="cart-btn" onclick="addToCart('Rings', 400,'resin5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+  <!--Category 5:-->
+  <section class="category">
+    <h2>Resin art</h2>
+    <div class="info-card">
+      <h3>About Crocheting</h3>
+      <p>"Inspired by oceans and flow, resin art freezes the beauty of movement and color into timeless designs."</p>
+    </div>
+
+    <div class="slider">
+      <button class="prev">❮</button>
+      <div class="slider-track">
+        <div class="slide"><img src="crochet1.jpeg"><h4>Cute Plant</h4><p>₹200</p><button class="cart-btn" onclick="addToCart('Cute Plant', 200,'crochet1.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="crochet2.jpeg"><h4>Flower Scarf</h4><p>₹700</p><button class="cart-btn" onclick="addToCart('Flower Scarf', 700,'crochet2.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="crochet3.jpeg"><h4>Lily Bracelet</h4><p>₹100</p><button class="cart-btn" onclick="addToCart('Lily Bracelet', 100,'crochet3.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="crochet4.jpeg"><h4>Curtain Holder</h4><p>₹250</p><button class="cart-btn" onclick="addToCart('Curtain Holder', 250,'crochet4.jpeg')">Add to Cart</button></div>
+        <div class="slide"><img src="crochet5.jpeg"><h4>Purple Frame</h4><p>₹1,500</p><button class="cart-btn" onclick="addToCart('Purple Frame', 1500,'crochet5.jpeg')">Add to Cart</button></div>
+      </div>
+      <button class="next">❯</button>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h2>ArtNest</h2>
+        <p>We bring art closer to you. Explore unique paintings, sculptures, and digital masterpieces by independent artists.</p>
+        <div class="socials">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="h.html">Home</a></li>
+          <li><a href="Gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="letstalk.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <p><i class="fas fa-phone"></i> +91 12345 67890</p>
+        <p><i class="fas fa-envelope"></i> contact@artnest.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ArtNest. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+
+    function goToCart() {
+  window.location.href = "cart.html";
+}
+
+
+function addToCart(name, price, img) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({ name, price, img });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Item added to cart!");
+}
+
+   // Smooth and limited slider movement
+document.querySelectorAll(".slider").forEach(slider => {
+  const track = slider.querySelector(".slider-track");
+  const slides = slider.querySelectorAll(".slide");
+  const prev = slider.querySelector(".prev");
+  const next = slider.querySelector(".next");
+
+  let index = 0;
+
+  if (slides.length === 0) {
+    prev.style.display = "none";
+    next.style.display = "none";
+    return;
+  }
+
+  const slideWidth = slides[0].offsetWidth + 20; // gap between slides
+  const totalWidth = track.scrollWidth;
+  const visibleWidth = slider.offsetWidth;
+
+  next.onclick = () => {
+    // Allow small movement but stop before too much blank space
+    if ((index + 1) * slideWidth < totalWidth - visibleWidth / 2) {
+      index++;
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+  };
+
+  prev.onclick = () => {
+    if (index > 0) {
+      index--;
+      track.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+  };
+});
+
+
+  </script>
+</body>
+</html>

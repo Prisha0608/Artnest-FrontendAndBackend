@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "id": "d4a0",
+      "username": "Manureet Kaur",
+      "password": "None123@"
+    },
+    {
+      "id": "b005",
+      "username": "Selya Sharma",
+      "password": "None@1234",
+      "email":"selyasharma5@gmail.com",
+      "social":"http://selya.com",
+      "bio":"I am an artist"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "7f1a",
+      "firstName": "Manureet Kaur",
+      "lastName": "Saluja",
+      "email": "msaluja6754@gmail.com",
+      "phone": "6284263835",
+      "message": "ewtyyw"
+    },
+    {
+      "id": "b96a",
+      "firstName": "Manureet Kaur",
+      "lastName": "Saluja",
+      "email": "msaluja6754@gmail.com",
+      "phone": "6284263835",
+      "message": "hello"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Resin Bliss",
+      "price": 1000,
+      "image": "resin2.jpeg",
+      "category": "Trending"
+    },
+    {
+      "id": 2,
+      "name": "Night Ball",
+      "price": 4800,
+      "image": "painting4.jpeg",
+      "category": "Trending"
+    },
+    {
+      "id": 3,
+      "name": "Purple Frame",
+      "price": 1500,
+      "image": "crochet5.jpeg",
+      "category": "Trending"
+    },
+    {
+      "id": 4,
+      "name": "Jokers Whisper",
+      "price": 2800,
+      "image": "abstract3.jpeg",
+      "category": "Trending"
+    },
+    {
+      "id": 5,
+      "name": "Green Valley",
+      "price": 2500,
+      "image": "painting1.jpeg",
+      "category": "Paintings"
+    },
+    {
+      "id": 6,
+      "name": "Calm River",
+      "price": 1800,
+      "image": "painting2.jpeg",
+      "category": "Paintings"
+    },
+    {
+      "id": 7,
+      "name": "Night Peaks",
+      "price": 2100,
+      "image": "painting3.jpeg",
+      "category": "Paintings"
+    },
+    {
+      "id": 8,
+      "name": "Bar Brew",
+      "price": 2200,
+      "image": "painting5.jpeg",
+      "category": "Paintings"
+    },
+    {
+      "id": 9,
+      "name": "Color Burst",
+      "price": 1900,
+      "image": "abstract1.jpeg",
+      "category": "Abstract Art"
+    },
+    {
+      "id": 10,
+      "name": "Dream Flow",
+      "price": 2000,
+      "image": "abstract2.jpeg",
+      "category": "Abstract Art"
+    },
+    {
+      "id": 11,
+      "name": "Flora",
+      "price": 2200,
+      "image": "abstract4.jpeg",
+      "category": "Abstract Art"
+    },
+    {
+      "id": 12,
+      "name": "Vision Wave",
+      "price": 2200,
+      "image": "abstract5.jpeg",
+      "category": "Abstract Art"
+    },
+    {
+      "id": 13,
+      "name": "Graceful Lady",
+      "price": 5000,
+      "image": "portrait1.jpeg",
+      "category": "Portrait Art"
+    },
+    {
+      "id": 14,
+      "name": "Gentle Smile",
+      "price": 5300,
+      "image": "portrait2.jpeg",
+      "category": "Portrait Art"
+    },
+    {
+      "id": 15,
+      "name": "Mystic Gaze",
+      "price": 4700,
+      "image": "portrait3.jpeg",
+      "category": "Portrait Art"
+    },
+    {
+      "id": 16,
+      "name": "Catty",
+      "price": 5200,
+      "image": "portrait4.jpeg",
+      "category": "Portrait Art"
+    },
+    {
+      "id": 17,
+      "name": "Golden",
+      "price": 6200,
+      "image": "portrait5.jpeg",
+      "category": "Portrait Art"
+    },
+    {
+      "id": 18,
+      "name": "The Lady",
+      "price": 1500,
+      "image": "sculpture1.jpeg",
+      "category": "Sculptures"
+    },
+    {
+      "id": 19,
+      "name": "Hold",
+      "price": 1800,
+      "image": "sculpture2.jpeg",
+      "category": "Sculptures"
+    },
+    {
+      "id": 20,
+      "name": "Pink Peaks",
+      "price": 2100,
+      "image": "sculpture3.jpeg",
+      "category": "Sculptures"
+    },
+    {
+      "id": 21,
+      "name": "Green Wave",
+      "price": 2200,
+      "image": "sculpture4.jpeg",
+      "category": "Sculptures"
+    },
+    {
+      "id": 22,
+      "name": "Mixed",
+      "price": 2200,
+      "image": "sculpture5.jpeg",
+      "category": "Sculptures"
+    },
+    {
+      "id": 23,
+      "name": "Tray",
+      "price": 1000,
+      "image": "resin1.jpeg",
+      "category": "Resin Art"
+    },
+    {
+      "id": 24,
+      "name": "Bracelet",
+      "price": 500,
+      "image": "resin3.jpeg",
+      "category": "Resin Art"
+    },
+    {
+      "id": 25,
+      "name": "Flower Tray",
+      "price": 1100,
+      "image": "resin4.jpeg",
+      "category": "Resin Art"
+    },
+    {
+      "id": 26,
+      "name": "Rings",
+      "price": 400,
+      "image": "resin5.jpeg",
+      "category": "Resin Art"
+    },
+    {
+      "id": 27,
+      "name": "Cute Plant",
+      "price": 200,
+      "image": "crochet1.jpeg",
+      "category": "Crochet"
+    },
+    {
+      "id": 28,
+      "name": "Flower Scarf",
+      "price": 700,
+      "image": "crochet2.jpeg",
+      "category": "Crochet"
+    },
+    {
+      "id": 29,
+      "name": "Lily Bracelet",
+      "price": 100,
+      "image": "crochet3.jpeg",
+      "category": "Crochet"
+    },
+    {
+      "id": 30,
+      "name": "Curtain Holder",
+      "price": 250,
+      "image": "crochet4.jpeg",
+      "category": "Crochet"
+    }
+  ]
+}
