@@ -10,6 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
+const cors = require("cors");
+app.use(cors());
+
+// Json file paths
+const usersFile = "./data/users.json";
 
 // Configure multer
 const storage = multer.diskStorage({
@@ -72,6 +77,37 @@ app.post("/profile", (req, res) => {
   const filePath = "./data/profile.json";
   fs.writeFileSync(filePath, JSON.stringify(req.body, null, 2));
   res.json({ message: "Profile updated" });
+});
+app.get("/users", (req, res) => {
+
+  if (!fs.existsSync(usersFile)) {
+    return res.json([]);
+  }
+
+  const users = JSON.parse(fs.readFileSync(usersFile));
+
+  if (req.query.username) {
+    const filtered = users.filter(
+      user => user.username === req.query.username
+    );
+    return res.json(filtered);
+  }
+
+  res.json(users);
+
+});
+app.post("/users", (req, res) => {
+  let users = [];
+
+  if (fs.existsSync(usersFile)) {
+    users = JSON.parse(fs.readFileSync(usersFile));
+  }
+
+  users.push(req.body);
+
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+  res.json({ message: "User registered successfully" });
 });
 
 app.listen(PORT, () => {

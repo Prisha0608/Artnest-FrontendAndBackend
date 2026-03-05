@@ -30,28 +30,54 @@
       <img src="pic2.jpg" alt="pic" width="600px">
     </div>
     <div class="login-section">
-      <h2>Sign-up</h2>
+      <h1>Sign-up</h1>
       <form id="signupForm">
-  <div class="input-group">
-    <label for="username">Username</label>
-    <input type="text" id="username" placeholder="Enter your username" required>
-    <span id="usernameError" class="error"></span>
-  </div>
+      <div class="input-group">
+        <label>Sign up as:</label>
 
-  <div class="input-group">
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Enter your password" required>
-    <span id="passwordError" class="error"></span>
-  </div>
+        <div class="role-options">
+          <label>
+            <input type="radio" name="role" value="artist" required>
+            Artist
+          </label>
 
-  <div class="input-group">
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
-    <span id="confirmError" class="error"></span>
-  </div>
+          <label>
+            <input type="radio" name="role" value="customer">
+            Customer
+          </label>
+        </div>
 
-  <button type="submit" class="btn">Sign-up</button>
-</form>
+        <span id="roleError" class="error"></span>
+      </div>
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" required>
+          <span id="usernameError" class="error"></span>
+        </div>
+<div class="input-group">
+  <label>Email or Phone Number</label>
+  <input 
+    type="text" 
+    id="contact" 
+    placeholder="Enter email or phone number" 
+    required
+  >
+  <span id="contactError" class="error"></span>
+</div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+          <span id="passwordError" class="error"></span>
+        </div>
+
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+          <span id="confirmError" class="error"></span>
+        </div>
+
+        <button type="submit" class="btn">Sign-up</button>
+      </form>
 
       <div class="signup-link">
         Already have an account? <a href="login.html">Login</a>
@@ -68,9 +94,11 @@
         <h2 class="logo">ArtNest</h2>
         <p>We are providing high-quality artworks and a platform for artists and art lovers to connect.</p>
         <div class="socials">
-          <a href="#"><i class="facebook"></i></a>
-          <a href="#"><i class="twitter"></i></a>
-          <a href="#"><i class="instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i>
+
+            </i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -92,8 +120,6 @@
       <p>&copy; 2025 ArtNest. All Rights Reserved.</p>
     </div>
   </footer>
-  </div>
-  <div>
 
 </body>
 
