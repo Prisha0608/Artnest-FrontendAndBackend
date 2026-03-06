@@ -1,22 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const form = document.querySelector("form");
   const API_URL = "http://localhost:3000/contacts";
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async function(e) {
+
     e.preventDefault();
 
-    // Remove previous messages
-    document.querySelectorAll(".error, .success").forEach((el) => el.remove());
+    // remove previous messages
+    document.querySelectorAll(".error, .success").forEach(el => el.remove());
 
-    const firstName = form.querySelector('input[placeholder="First Name *"]').value.trim();
-    const lastName = form.querySelector('input[placeholder="Last Name *"]').value.trim();
-    const email = form.querySelector('input[type="email"]').value.trim();
-    const phone = form.querySelector('input[type="tel"]').value.trim();
-    const message = form.querySelector("textarea").value.trim();
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const message = document.getElementById("message").value.trim();
 
     let valid = true;
 
-    // Helper function for errors
     function showError(input, msg) {
       const span = document.createElement("span");
       span.className = "error";
@@ -26,57 +27,83 @@ document.addEventListener("DOMContentLoaded", () => {
       input.insertAdjacentElement("afterend", span);
     }
 
-    // Validations
+    // validations
+
     if (firstName === "") {
-      showError(form.querySelector('input[placeholder="First Name *"]'), "First name is required");
+      showError(document.getElementById("firstName"), "First name required");
       valid = false;
     }
+
     if (lastName === "") {
-      showError(form.querySelector('input[placeholder="Last Name *"]'), "Last name is required");
+      showError(document.getElementById("lastName"), "Last name required");
       valid = false;
     }
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailPattern.test(email)) {
-      showError(form.querySelector('input[type="email"]'), "Enter a valid email");
+      showError(document.getElementById("email"), "Enter valid email");
       valid = false;
     }
+
     if (phone && !/^[0-9]{10}$/.test(phone)) {
-      showError(form.querySelector('input[type="tel"]'), "Enter a valid 10-digit phone number");
+      showError(document.getElementById("phone"), "Enter valid 10 digit phone");
       valid = false;
     }
+
     if (message === "") {
-      showError(form.querySelector("textarea"), "Message is required");
+      showError(document.getElementById("message"), "Message required");
       valid = false;
     }
 
     if (!valid) return;
 
-    // Prepare data
-    const newMessage = { firstName, lastName, email, phone, message };
+    const newMessage = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      message
+    };
 
     try {
-      const res = await fetch(API_URL, {
+
+      const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMessage),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newMessage)
       });
 
-      if (res.ok) {
+      if (response.ok) {
+
         const success = document.createElement("p");
         success.className = "success";
         success.style.color = "green";
         success.style.textAlign = "center";
-        success.textContent = "✅ Message sent successfully!";
+        success.textContent = "Message sent successfully!";
+
         form.appendChild(success);
+
         form.reset();
 
-        // Remove success message after 3 seconds
-        setTimeout(() => success.remove(), 5000);
+        setTimeout(() => {
+          success.remove();
+        }, 4000);
+
       } else {
-        alert("Failed to send message!");
+
+        alert("Failed to send message");
+
       }
-    } catch (err) {
-      console.error("Error:", err);
+
+    } catch (error) {
+
+      alert("Server connection error");
+
     }
+
   });
+
 });

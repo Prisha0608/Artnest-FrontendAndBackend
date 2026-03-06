@@ -19,6 +19,8 @@ const usersFile = "./data/users.json";
 // Selya JSON FILE PATH
 const cartFile = "./data/cart.json";
 
+const contactsFile = "./data/contacts.json";
+
 // Configure multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -217,6 +219,32 @@ app.get("/login", (req, res) => {
     res.json(user);
 
   });
+});
+
+// Save contact form messages
+app.post("/contacts", (req, res) => {
+
+  let contacts = [];
+
+  if (fs.existsSync(contactsFile)) {
+    contacts = JSON.parse(fs.readFileSync(contactsFile));
+  }
+
+  const newMessage = {
+    id: Date.now(),
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
+    message: req.body.message
+  };
+
+  contacts.push(newMessage);
+
+  fs.writeFileSync(contactsFile, JSON.stringify(contacts, null, 2));
+
+  res.json({ message: "Message saved successfully" });
+
 });
 
 app.listen(PORT, () => {
