@@ -4,5 +4,11 @@
     "contact": "msaluja6754@gmail.com",
     "password": "Lol@1234",
     "role": "artist"
+  },
+  {
+    "username": "Amrinder",
+    "contact": "1234567899",
+    "password": "Mehak@123",
+    "role": "customer"
   }
 ]

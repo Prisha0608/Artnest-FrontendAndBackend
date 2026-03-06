@@ -3,34 +3,37 @@ const API_URL = "http://localhost:3000/login";
 const form = document.getElementById("loginForm");
 
 form.addEventListener("submit", async function(e) {
-  e.preventDefault();   // stop page reload
+  e.preventDefault();   // page reload stop
 
-  const loginInput = document.getElementById("username").value.trim();
+  const loginInput = document.getElementById("login").value.trim();
   const password = document.getElementById("password").value.trim();
-  const errorMessage = document.getElementById("error-message");
+  const errorMessage = document.getElementById("error");
 
   errorMessage.textContent = "";
 
   try {
 
     const response = await fetch(
-      `${API_URL}?login=${loginInput}&password=${password}`
+      `${API_URL}?login=${encodeURIComponent(loginInput)}&password=${encodeURIComponent(password)}`
     );
 
+    const data = await response.json();
+
+    // ❌ if credentials wrong
     if (!response.ok) {
-      errorMessage.textContent = "Invalid username/contact or password";
+      errorMessage.textContent = data.message;
       return;
     }
 
-    const user = await response.json();
-
-    if (user.role === "artist") {
+    // ✅ correct login → redirect
+    if (data.role === "artist") {
       window.location.href = "artist.html";
-    } else {
-      window.location.href = "gallery.html";
+    } 
+    else if (data.role === "customer") {
+      window.location.href = "Gallery.html";
     }
 
-  } catch (err) {
+  } catch (error) {
     errorMessage.textContent = "Server connection error";
   }
 

@@ -113,12 +113,6 @@ app.post("/users", (req, res) => {
   res.json({ message: "User registered successfully" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-
-
 //Selya
 
 
@@ -199,9 +193,15 @@ app.delete("/remove-from-cart/:index", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
+
   const { login, password } = req.query;
 
   fs.readFile(usersFile, "utf8", (err, data) => {
+
+    if (err) {
+      return res.status(500).json({ message: "Server error" });
+    }
+
     const users = JSON.parse(data || "[]");
 
     const user = users.find(
@@ -211,9 +211,14 @@ app.get("/login", (req, res) => {
     );
 
     if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid username/contact or password" });
     }
 
     res.json(user);
+
   });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
