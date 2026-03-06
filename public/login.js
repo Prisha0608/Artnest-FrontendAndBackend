@@ -1,24 +1,37 @@
-const API_URL = "http://localhost:3000/users";
+const API_URL = "http://localhost:3000/login";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+const form = document.getElementById("loginForm");
 
-  const username = document.getElementById("username").value.trim();
+form.addEventListener("submit", async function(e) {
+  e.preventDefault();   // stop page reload
+
+  const loginInput = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
+  const errorMessage = document.getElementById("error-message");
 
-  if (!username || !password) {
-    alert("Please enter username and password!");
-    return;
+  errorMessage.textContent = "";
+
+  try {
+
+    const response = await fetch(
+      `${API_URL}?login=${loginInput}&password=${password}`
+    );
+
+    if (!response.ok) {
+      errorMessage.textContent = "Invalid username/contact or password";
+      return;
+    }
+
+    const user = await response.json();
+
+    if (user.role === "artist") {
+      window.location.href = "artist.html";
+    } else {
+      window.location.href = "gallery.html";
+    }
+
+  } catch (err) {
+    errorMessage.textContent = "Server connection error";
   }
 
-  const response = await fetch(`${API_URL}?username=${username}&password=${password}`);
-  const users = await response.json();
-
-  if (users.length > 0) {
-    alert("Login successful!");
-    // You could also store the user info in localStorage
-    window.location.href = "artist.html"; // redirect to homepage
-  } else {
-    alert("Invalid username or password!");
-  }
 });

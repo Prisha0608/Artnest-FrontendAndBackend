@@ -113,3 +113,23 @@ app.post("/users", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+app.get("/login", (req, res) => {
+  const { login, password } = req.query;
+
+  fs.readFile(usersFile, "utf8", (err, data) => {
+    const users = JSON.parse(data || "[]");
+
+    const user = users.find(
+      (u) =>
+        (u.username === login || u.contact === login) &&
+        u.password === password
+    );
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.json(user);
+  });
+});
