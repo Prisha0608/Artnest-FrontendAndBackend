@@ -250,3 +250,41 @@ app.post("/contacts", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
+//ARTIST SUBSCRIPTION
+
+
+
+const fs=require("fs");
+
+// endpoint for subscription
+app.post("/subscribe", (req, res) => {
+
+    const { fullname, email, payment } = req.body;
+
+    const newUser = {
+        fullname: fullname,
+        email: email,
+        payment: payment,
+        date: new Date()
+    };
+
+    let data = [];
+
+    if (fs.existsSync("subscriptions.json")) {
+        const fileData = fs.readFileSync("subscriptions.json");
+        data = JSON.parse(fileData);
+    }
+
+    data.push(newUser);
+
+    fs.writeFileSync("subscriptions.json", JSON.stringify(data, null, 2));
+
+    res.send("Subscription saved successfully!");
+
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
