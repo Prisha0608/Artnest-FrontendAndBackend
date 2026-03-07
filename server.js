@@ -30,10 +30,11 @@ const upload = multer({ storage: storage });
 
 // Upload route
 app.post("/upload", upload.single("artwork"), (req, res) => {
-  const { title, price } = req.body;
+  const {username, title, price } = req.body;
 
   const newArtwork = {
     id: Date.now(),
+    username,
     title,
     price,
     image: `/uploads/${req.file.filename}`
@@ -65,7 +66,7 @@ app.get("/artworks", (req, res) => {
 // PROFILE ROUTES
 
 app.get("/profile", (req, res) => {
-  const filePath = "./data/profile.json";
+  const filePath = "./data/users.json";
   if (!fs.existsSync(filePath)) {
     return res.json({});
   }
@@ -74,9 +75,33 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-  const filePath = "./data/profile.json";
-  fs.writeFileSync(filePath, JSON.stringify(req.body, null, 2));
-  res.json({ message: "Profile updated" });
+  const { username, fullname, bio ,social,email } = req.body;
+  const filePath = "./data/users.json";
+  if (!fs.existsSync(usersFile)) {
+    return res.status(404).json({ message: "Users file not found" });
+  }
+
+  let users = JSON.parse(fs.readFileSync(usersFile));
+
+  const userIndex = users.findIndex(user => user.username === username);
+ 
+  if (userIndex === -1) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  // update profile fields
+  users[userIndex].fullname = fullname;
+  users[userIndex].bio = bio;
+  users[userIndex].contact= email;
+  users[userIndex].social = social;
+
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+  res.json({
+    message: "Profile updated successfully",
+    user: users[userIndex]
+  });
+
 });
 app.get("/users", (req, res) => {
 

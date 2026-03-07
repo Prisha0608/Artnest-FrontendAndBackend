@@ -17,6 +17,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   if (users.length > 0) {
     alert("Login successful!");
     // You could also store the user info in localStorage
+    localStorage.setItem("loggedInUser", username);
     window.location.href = "artist.html"; // redirect to homepage
   } else {
     alert("Invalid username or password!");
