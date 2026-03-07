@@ -141,7 +141,6 @@ app.post("/users", (req, res) => {
 
 //Selya
 // Selya JSON FILE PATH
-const path = require("path");
 const cartFile = path.join(__dirname, "data", "cart.json");
 if (!fs.existsSync(path.join(__dirname, "data"))) {
     fs.mkdirSync(path.join(__dirname, "data"));
@@ -221,11 +220,8 @@ app.delete("/remove-from-cart/:index", (req, res) => {
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
   return res.json({ success: true });
-<<<<<<< HEAD
   
-=======
   res.json({ message: "Item removed" });
->>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 });
 
 app.get("/login", (req, res) => {
@@ -288,29 +284,12 @@ app.post("/contacts", (req, res) => {
 
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
 //ARTIST SUBSCRIPTION
-=======
 // ARTIST SUBSCRIPTION
->>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 
 const subsFile = "./data/subscriptions.json";
 
-<<<<<<< HEAD
 // endpoint for subscription
-=======
->>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 app.post("/subscribe", (req, res) => {
 
   const { fullname, email, payment } = req.body;
@@ -333,14 +312,10 @@ app.post("/subscribe", (req, res) => {
 
   fs.writeFileSync(subsFile, JSON.stringify(data, null, 2));
 
-<<<<<<< HEAD
     res.send("Subscription saved successfully!");
 
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-=======
-  res.redirect("/t.html");
->>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
+  console.log(`Server running on http://localhost:${PORT}`);
 });
