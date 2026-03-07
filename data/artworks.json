@@ -5,5 +5,12 @@
     "title": "carbon(23).png",
     "price": "5000",
     "image": "/uploads/1772884334838.png"
+  },
+  {
+    "id": 1772884560995,
+    "username": "Prisha",
+    "title": "dp.jpg",
+    "price": "4000",
+    "image": "/uploads/1772884560987.jpg"
   }
 ]
