@@ -202,7 +202,7 @@ btn.addEventListener("click", async (e) => {
   e.preventDefault();
   modal.style.display = "flex";
 
-  const loggedUser = localStorage.getItem("loggedInUser");
+  
   if (!loggedUser) return;
 
   const response = await fetch(`${API_URL}?username=${loggedUser}`);

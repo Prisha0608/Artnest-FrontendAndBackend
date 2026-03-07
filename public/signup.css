@@ -72,6 +72,15 @@ nav ul.menu li a:hover {
   color: white;
   cursor: pointer;
 }
+.input-group input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #3ccf92;
+}
+
+.btn:hover {
+  background: #2ca375;
+  transform: scale(1.02);
+}
 
 @media (max-width: 768px) {
   nav {

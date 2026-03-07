@@ -109,9 +109,7 @@ body {
   align-items: center;
   min-height: 100vh;
   background: rgb(230, 245, 234);
-  padding: 1rem;
   margin: 0;
-  padding: 0;
 }
 
 .container {
@@ -317,4 +315,17 @@ body {
   .socials {
     margin-top: 15px;
   }
+}
+.input-group input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #3ccf92;
+}
+.btn:hover {
+  background: #2ca375;
+  transform: scale(1.02);
+}
+.error{
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
 }

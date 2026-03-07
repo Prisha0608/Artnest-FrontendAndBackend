@@ -28,7 +28,7 @@
     <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
 
     <ul class="menu">
-      <li><a href="h.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="t.html"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
       <li><a href="Gallery.html"><i class="fa-solid fa-images"></i> Gallery</a></li>
       <li><a href="letstalk.html"><i class="fas fa-envelope"></i> Contact</a></li>
@@ -39,9 +39,9 @@
   <div class="welcome_card">
     <div class="shapes"></div>
     <div class="welcome">
-      <h2>Welcome, Artist!</h2>
+      <h2 id="welcomeText">Welcome, Artist!</h2>
       <p>Showcase your creativity, upload your artwork, and connect with the world.</p>
-      <a href="Gallery.html" class="btn"><i class="fas fa-images"></i> Explore Gallery</a>
+      <a href="Gallery.html" class="btn" style="text-decoration:none ;"><i class="fas fa-images"></i> Explore Gallery</a>
     </div>
   </div>
 
@@ -78,7 +78,7 @@
         <div class="icon"><i class="fas fa-user"></i></div>
         <h3>Profile</h3>
         <p>Update your bio, add social links, and let people know more about you.</p>
-         <button id="profileModal">Edit Profile</button>
+        <button id="profileModal">Edit Profile</button>
         <!-- <a href="" class="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</a> -->
       </div>
     </div>
@@ -129,7 +129,7 @@
   <!-- Footer -->
   <footer class="footer">
     <svg class="circle circle-footer-pattern" viewBox="0 0 160 160">
-      <circle cx="80" cy="80" r="80" fill="#f2c14e" opacity="0.08" />
+      <circle cx="80" cy="80" r="80" fill="#f2c14e" opacity="0.08"/>
     </svg>
 
     <div class="footer-container">
@@ -166,141 +166,219 @@
   <div id="toast" class="toast"></div>
 
   <!-- JavaScript -->
-  <script>
-    // ===============================
-    // COMMON ELEMENTS
-    // ===============================
-    const toast = document.getElementById("toast");
+ <script>
+  // ===============================
+// COMMON ELEMENTS
+// ===============================
+const toast = document.getElementById("toast");
+const username = localStorage.getItem("loggedInUser");
+const welcomeText = document.getElementById("welcomeText");
 
-    function showToast(message, type = "success") {
-      toast.textContent = message;
-      toast.className = "toast " + type + " show";
-      setTimeout(() => {
-        toast.className = "toast " + type;
-      }, 3000);
+const loggedUser = localStorage.getItem("loggedInUser");
+
+if (!loggedUser) {
+  alert("Please login first");
+  window.location.href = "login.html";
+}
+
+document.getElementById("welcomeText").textContent = `Welcome, ${loggedUser}!`;
+
+function showToast(message, type = "success") {
+  toast.textContent = message;
+  toast.className = "toast " + type + " show";
+
+  setTimeout(() => {
+    toast.className = "toast " + type;
+  }, 3000);
+}
+
+
+// ===============================
+// LOGIN CHECK
+// ===============================
+
+if (!loggedUser) {
+  alert("Please login first");
+  window.location.href = "login.html";
+}
+
+
+// ===============================
+// UPLOAD MODAL SECTION
+// ===============================
+const uploadModal = document.getElementById("uploadModal");
+const openUploadBtn = document.getElementById("openUploadModal");
+const closeUpload = document.querySelector(".close-upload");
+
+const uploadForm = document.getElementById("uploadForm");
+const artFile = document.getElementById("artFile");
+const artPrice = document.getElementById("artPrice");
+
+openUploadBtn.onclick = () => {
+  uploadModal.style.display = "flex";
+};
+
+closeUpload.onclick = () => {
+  uploadModal.style.display = "none";
+};
+
+uploadForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!artFile.files.length) {
+    showToast("Please select an artwork.", "error");
+    return;
+  }
+
+  if (!artPrice.value || artPrice.value <= 0) {
+    showToast("Enter valid price.", "error");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("artwork", artFile.files[0]);
+  formData.append("title", artFile.files[0].name);
+  formData.append("price", artPrice.value);
+  formData.append("username",username);
+
+  try {
+
+    const response = await fetch("/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    if (response.ok) {
+      showToast("Artwork uploaded successfully!");
+      uploadModal.style.display = "none";
+      uploadForm.reset();
+    } else {
+      showToast("Upload failed.", "error");
     }
 
-    // ===============================
-    // UPLOAD MODAL SECTION
-    // ===============================
-    const uploadModal = document.getElementById("uploadModal");
-    const openUploadBtn = document.getElementById("openUploadModal");
-    const closeUpload = document.querySelector(".close-upload");
+  } catch (error) {
+    showToast("Server error.", "error");
+  }
 
-    const uploadForm = document.getElementById("uploadForm");
-    const artFile = document.getElementById("artFile");
-    const artPrice = document.getElementById("artPrice");
+});
 
-    openUploadBtn.onclick = () => {
-      uploadModal.style.display = "flex";
-    };
 
-    closeUpload.onclick = () => {
-      uploadModal.style.display = "none";
-    };
+// ===============================
+// PROFILE MODAL SECTION
+// ===============================
+const API_URL = "http://localhost:3000/users";
 
-    uploadForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+const modal = document.getElementById("editProfileModal");
+const btn = document.getElementById("profileModal");
+const closeProfile = document.querySelector(".close");
 
-      if (!artFile.files.length) {
-        showToast("Please select an artwork.", "error");
-        return;
-      }
+let originalData = {};
 
-      if (!artPrice.value || artPrice.value <= 0) {
-        showToast("Enter valid price.", "error");
-        return;
-      }
+// Open Modal
+btn.addEventListener("click", async (e) => {
 
-      const formData = new FormData();
-      formData.append("artwork", artFile.files[0]);
-      formData.append("title", artFile.files[0].name);
-      formData.append("price", artPrice.value);
+  e.preventDefault();
+  modal.style.display = "flex";
 
-      try {
-        const response = await fetch("/upload", {
-          method: "POST",
-          body: formData,
-        });
+  try {
 
-        if (response.ok) {
-          showToast("Artwork uploaded successfully!");
-          uploadModal.style.display = "none";
-          uploadForm.reset();
-        } else {
-          showToast("Upload failed.", "error");
-        }
-      } catch (err) {
-        showToast("Server error.", "error");
-      }
-    });
+    const response = await fetch(`${API_URL}?username=${loggedUser}`);
+    const user = await response.json();
 
-    // ===============================
-    // PROFILE MODAL SECTION
-    // ===============================
-    const modal = document.getElementById("editProfileModal");
-    const btn = document.getElementById("profileModal");
-    const span = document.querySelector(".close");
+    if (user.length > 0) {
 
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      modal.style.display = "flex";
-
-      try {
-        const response = await fetch("/profile");
-        const user = await response.json();
-
-        document.getElementById("name").value = user.name || "";
-        document.getElementById("bio").value = user.bio || "";
-        document.getElementById("social").value = user.social || "";
-        document.getElementById("email").value = user.email || "";
-      } catch (err) {
-        showToast("Error fetching profile", "error");
-      }
-    });
-
-    span.onclick = () => (modal.style.display = "none");
-
-    document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const updatedData = {
-        name: document.getElementById("name").value.trim(),
-        bio: document.getElementById("bio").value.trim(),
-        social: document.getElementById("social").value.trim(),
-        email: document.getElementById("email").value.trim(),
+      originalData = {
+        name: user[0].fullname || "",
+        bio: user[0].bio || "",
+        social: user[0].social || "",
+        email: user[0].contact || ""
       };
 
-      try {
-        const response = await fetch("/profile", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedData),
-        });
+      document.getElementById("name").value = originalData.name;
+      document.getElementById("bio").value = originalData.bio;
+      document.getElementById("social").value = originalData.social;
+      document.getElementById("email").value = originalData.email;
 
-        if (response.ok) {
-          showToast("Profile updated successfully!");
-          modal.style.display = "none";
-        } else {
-          showToast("Failed to update profile", "error");
-        }
-      } catch (error) {
-        showToast("Server error", "error");
-      }
+    }
+
+  } catch (error) {
+    showToast("Error loading profile", "error");
+  }
+
+});
+
+// Close profile modal
+closeProfile.onclick = () => {
+  modal.style.display = "none";
+};
+
+
+// ===============================
+// SAVE PROFILE
+// ===============================
+document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const bio = document.getElementById("bio").value.trim();
+  const social = document.getElementById("social").value.trim();
+  const email = document.getElementById("email").value.trim();
+
+  const newData = {
+    username: username,
+    fullname: name,   
+    bio: bio,
+    social: social,
+    email: email
+  };
+
+  if (JSON.stringify(originalData) === JSON.stringify(newData)) {
+    showToast("No changes made.", "error");
+    modal.style.display = "none";
+    return;
+  }
+
+  try {
+
+    const response = await fetch("http://localhost:3000/profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newData)
     });
 
-    // ===============================
-    // CLOSE MODALS WHEN CLICK OUTSIDE
-    // ===============================
-    window.addEventListener("click", (event) => {
-      if (event.target === uploadModal) {
-        uploadModal.style.display = "none";
-      }
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    });
-  </script>
+    const result = await response.json();
+
+    if (response.ok) {
+      showToast("Profile updated successfully!");
+      modal.style.display = "none";
+    } else {
+      showToast(result.message || "Update failed.", "error");
+    }
+
+  } catch (error) {
+    showToast("Server error.", "error");
+  }
+
+});
+
+// ===============================
+// CLOSE MODALS WHEN CLICK OUTSIDE
+// ===============================
+window.addEventListener("click", (event) => {
+
+  if (event.target === uploadModal) {
+    uploadModal.style.display = "none";
+  }
+
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+
+});
+ </script>
 </body>
 
 </html>

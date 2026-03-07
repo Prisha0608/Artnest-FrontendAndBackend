@@ -190,25 +190,30 @@
 
     <div class="plan-summary" id="planSummary">Loading your plan details...</div>
 
-    <form id="subscriptionForm" novalidate>
-      <label for="name">Full Name</label>
-      <input type="text" id="name" placeholder="Enter your full name" required>
+    <form id="subscriptionForm" action="/subscribe" method="POST" novalidate>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email" required>
+<label for="name">Full Name</label>
+<input type="text" id="name" name="fullname" placeholder="Enter your full name" required>
 
-      <label>Payment Method</label>
-      <div class="payment-options" id="paymentOptions">
-        <div class="payment-option" data-method="UPI"><i class="fa-brands fa-google-pay"></i> UPI / GPay</div>
-        <div class="payment-option" data-method="Card"><i class="fa-solid fa-credit-card"></i> Debit / Credit Card</div>
-        <div class="payment-option" data-method="PayPal"><i class="fa-brands fa-paypal"></i> PayPal</div>
-        <div class="payment-option" data-method="NetBanking"><i class="fa-solid fa-wallet"></i> Net Banking</div>
-      </div>
+<label for="email">Email</label>
+<input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-      <div class="payment-fields" id="paymentFields"></div>
+<label>Payment Method</label>
 
-      <button type="submit">Complete Payment</button>
-    </form>
+<div class="payment-options" id="paymentOptions">
+  <div class="payment-option" data-method="UPI"><i class="fa-brands fa-google-pay"></i> UPI / GPay</div>
+  <div class="payment-option" data-method="Card"><i class="fa-solid fa-credit-card"></i> Debit / Credit Card</div>
+  <div class="payment-option" data-method="PayPal"><i class="fa-brands fa-paypal"></i> PayPal</div>
+  <div class="payment-option" data-method="NetBanking"><i class="fa-solid fa-wallet"></i> Net Banking</div>
+</div>
+
+<div class="payment-fields" id="paymentFields"></div>
+
+<input type="hidden" name="payment" id="paymentMethod">
+
+<button type="submit">Complete Payment</button>
+
+</form>
 
     <div class="confirmation" id="confirmation">
       <h3>Payment Successful 🎉</h3>
@@ -281,6 +286,7 @@
         option.classList.add('active');
 
         chosenMethod = option.dataset.method;
+        document.getElementById("paymentMethod").value = chosenMethod;
         paymentFields.style.display = 'block';
         paymentFields.innerHTML = paymentTemplates[chosenMethod] || '';
 

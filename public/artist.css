@@ -1,6 +1,4 @@
-/* =========================
-   GENERAL
-========================= */
+/* General Page */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -9,9 +7,7 @@ body {
   line-height: 1.6;
 }
 
-/* =========================
-   NAVBAR
-========================= */
+/* Navbar */
 nav {
   background: linear-gradient(90deg, #1f4234, #2d583f);
   display: flex;
@@ -27,6 +23,19 @@ nav h1 {
   color: white;
   font-weight: 600;
   font-family: 'Playfair Display', serif;
+}
+
+
+
+nav ul.menu li {
+  cursor: pointer;
+  font-weight: 500;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+nav ul.menu li:hover {
+  color: #a6e5b7;
 }
 
 nav ul.menu {
@@ -48,9 +57,11 @@ nav ul.menu li a:hover {
   color: #a6e5b7;
 }
 
+
 #menu-toggle {
   display: none;
 }
+
 
 .menu-icon {
   display: none;
@@ -59,22 +70,21 @@ nav ul.menu li a:hover {
   cursor: pointer;
 }
 
-/* =========================
-   MODALS
-========================= */
 .modal {
-  display: none;
+  display: none; /* Hidden by default */
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 64, 32, 0.5);
+  overflow: auto;
+  background-color: rgba(0, 64, 32, 0.5); /* soft green overlay */
   justify-content: center;
   align-items: center;
 }
 
+/* === Modal Content === */
 .modal-content {
   background-color: #e9f7ef;
   color: #002b1c;
@@ -86,8 +96,8 @@ nav ul.menu li a:hover {
   animation: fadeIn 0.3s ease;
 }
 
-.close,
-.close-upload {
+/* === Close Button === */
+.close {
   color: #002b1c;
   float: right;
   font-size: 24px;
@@ -95,14 +105,11 @@ nav ul.menu li a:hover {
   cursor: pointer;
 }
 
-.close:hover,
-.close-upload:hover {
+.close:hover {
   color: #1b4332;
 }
 
-/* =========================
-   FORM STYLING
-========================= */
+/* === Form Styling === */
 form {
   display: flex;
   flex-direction: column;
@@ -139,24 +146,60 @@ button:hover {
   background-color: #006b38;
 }
 
-/* Upload Button */
-#openUploadModal,#profileModal {
-  background: #1f4234;
-  color: white;
-  border-radius: 25px;
-  font-weight: bold;
-  padding: 0.6rem 1.2rem;
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
 }
 
-#openUploadModal:hover ,#profileModal:hover{
-  background: #7ccf87;
-  color: #1f4234;
-  transform: scale(1.05);
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+  
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+  }
+
+  nav ul.menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #2d583f;
+    margin-top: 0.5rem;
+    padding: 1rem 0;
+    border-radius: 10px;
+    animation: slideDown 0.3s ease;
+  }
+
+  nav ul.menu li {
+    text-align: center;
+    padding: 0.8rem 0;
+  }
+  
+
+  
+  .menu-icon {
+    display: block;
+  }
+
+  
+  #menu-toggle:checked ~ ul.menu {
+    display: flex;
+  }
 }
 
-/* =========================
-   WELCOME SECTION
-========================= */
+/* Slide-down animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome Section */
 .welcome_card {
   position: relative;
   background: linear-gradient(135deg, #1f4234, #3a7d44);
@@ -166,9 +209,32 @@ button:hover {
   overflow: hidden;
 }
 
+.shapes::before,
+.shapes::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+}
+
+.shapes::before {
+  width: 250px;
+  height: 250px;
+  top: -50px;
+  left: -50px;
+}
+
+.shapes::after {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  right: -80px;
+}
+
 .welcome h2 {
   font-size: 3rem;
   font-family: 'Playfair Display', serif;
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 
@@ -180,11 +246,14 @@ button:hover {
 
 .btn {
   background: #a6e5b7;
+  border: none;
   padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
   border-radius: 30px;
   color: #1f4234;
-  font-weight: 600;
-  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
   transition: all 0.3s ease;
 }
 
@@ -194,9 +263,7 @@ button:hover {
   transform: translateY(-3px);
 }
 
-/* =========================
-   FEATURES SECTION
-========================= */
+/* Features Section */
 .features {
   text-align: center;
   padding: 4rem 1rem;
@@ -205,10 +272,23 @@ button:hover {
 .features h2 {
   font-size: 2.2rem;
   font-family: 'Playfair Display', serif;
+  font-weight: 600;
   color: #1f4234;
   margin-bottom: 2.5rem;
+  position: relative;
 }
 
+.features h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  background: #7ccf87;
+  margin: 0.8rem auto;
+  border-radius: 2px;
+}
+
+/* Cards */
 .cards {
   display: flex;
   justify-content: center;
@@ -240,19 +320,63 @@ button:hover {
   font-family: 'Playfair Display', serif;
 }
 
+.card p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
 .card .icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: #1f4234;
 }
 
-/* =========================
-   EXTRA SECTION
-========================= */
+/* Upload Form */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.custom-file-upload,
+.upload-form button,
+.card a {
+  background: #1f4234;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.custom-file-upload:hover,
+.upload-form button:hover,
+.card a:hover {
+  background: #7ccf87;
+  color: #1f4234;
+  transform: scale(1.05);
+}
+
+.upload-form input[type="file"] {
+  display: none;
+}
+
+/* Extra Section */
 .extra {
   text-align: center;
   padding: 4rem 1rem;
   background: #e6f5ea;
+}
+
+.extra h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #1f4234;
 }
 
 .artist-grid {
@@ -275,6 +399,7 @@ button:hover {
 
 .artist-card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 .artist-card img {
@@ -285,20 +410,35 @@ button:hover {
   margin-bottom: 1rem;
 }
 
-/* =========================
-   FOOTER
-========================= */
+.artist-card p {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Footer */
 .footer {
-  background: #214436;
+  position: relative;
+  background:#214436;
   color: #ffffff;
   padding: 50px 10% 20px;
+  overflow: hidden;
+  margin-top: auto;
 }
+
+.circle-footer-pattern { 
+  position:absolute;
+  right: -40px; 
+  width: 160px; 
+  height: 160px; }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-col h4 {
@@ -309,7 +449,10 @@ button:hover {
 
 .footer-col ul {
   list-style: none;
-  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
 }
 
 .footer-col ul li a {
@@ -322,44 +465,77 @@ button:hover {
   color: #f2c14e;
 }
 
+.socials a {
+  color: #ffffff;
+  margin-right: 12px;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.socials a:hover {
+  color:#f2c14e;
+}
+
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
   font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ===============================
+   TOAST NOTIFICATION
+================================ */
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #1f4234;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: all 0.35s ease;
+  z-index: 2000;
+}
+
+/* when visible */
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* success toast */
+.toast.success {
+  background: #2d6a4f;
+}
+
+/* error toast */
+.toast.error {
+  background: #c1121f;
+}
+
 @media (max-width: 768px) {
-  nav ul.menu {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: #2d583f;
-    margin-top: 0.5rem;
-    padding: 1rem 0;
-    border-radius: 10px;
-  }
-
-  #menu-toggle:checked ~ ul.menu {
-    display: flex;
-  }
-
-  .menu-icon {
-    display: block;
-  }
-
   .footer-container {
     flex-direction: column;
     text-align: center;
+    align-items: center;
+  }
+
+  .footer-col {
+    width: 100%;
+  }
+
+  .socials {
+    margin-top: 15px;
   }
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
+

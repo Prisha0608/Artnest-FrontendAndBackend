@@ -18,6 +18,8 @@ const usersFile = "./data/users.json";
 
 
 
+const contactsFile = "./data/contacts.json";
+
 // Configure multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -32,10 +34,11 @@ const upload = multer({ storage: storage });
 
 // Upload route
 app.post("/upload", upload.single("artwork"), (req, res) => {
-  const { title, price } = req.body;
+  const {username, title, price } = req.body;
 
   const newArtwork = {
     id: Date.now(),
+    username,
     title,
     price,
     image: `/uploads/${req.file.filename}`
@@ -67,7 +70,7 @@ app.get("/artworks", (req, res) => {
 // PROFILE ROUTES
 
 app.get("/profile", (req, res) => {
-  const filePath = "./data/profile.json";
+  const filePath = "./data/users.json";
   if (!fs.existsSync(filePath)) {
     return res.json({});
   }
@@ -76,9 +79,33 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-  const filePath = "./data/profile.json";
-  fs.writeFileSync(filePath, JSON.stringify(req.body, null, 2));
-  res.json({ message: "Profile updated" });
+  const { username, fullname, bio ,social,email } = req.body;
+  const filePath = "./data/users.json";
+  if (!fs.existsSync(usersFile)) {
+    return res.status(404).json({ message: "Users file not found" });
+  }
+
+  let users = JSON.parse(fs.readFileSync(usersFile));
+
+  const userIndex = users.findIndex(user => user.username === username);
+ 
+  if (userIndex === -1) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  // update profile fields
+  users[userIndex].fullname = fullname;
+  users[userIndex].bio = bio;
+  users[userIndex].contact= email;
+  users[userIndex].social = social;
+
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+  res.json({
+    message: "Profile updated successfully",
+    user: users[userIndex]
+  });
+
 });
 app.get("/users", (req, res) => {
 
@@ -111,12 +138,6 @@ app.post("/users", (req, res) => {
 
   res.json({ message: "User registered successfully" });
 });
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
-
-
 
 //Selya
 // Selya JSON FILE PATH
@@ -195,5 +216,104 @@ app.delete("/remove-from-cart/:index", (req, res) => {
 
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
+<<<<<<< HEAD
   return res.json({ success: true });
+=======
+  res.json({ message: "Item removed" });
+});
+
+app.get("/login", (req, res) => {
+
+  const { login, password } = req.query;
+
+  fs.readFile(usersFile, "utf8", (err, data) => {
+
+    if (err) {
+      return res.status(500).json({ message: "Server error" });
+    }
+
+    const users = JSON.parse(data || "[]");
+
+    const user = users.find(
+      (u) =>
+        (u.username === login || u.contact === login) &&
+        u.password === password
+    );
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid username/contact or password" });
+    }
+
+    res.json(user);
+
+  });
+});
+
+// Save contact form messages
+app.post("/contacts", (req, res) => {
+
+  let contacts = [];
+
+  if (fs.existsSync(contactsFile)) {
+    contacts = JSON.parse(fs.readFileSync(contactsFile));
+  }
+
+  const newMessage = {
+    id: Date.now(),
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
+    message: req.body.message
+  };
+
+  contacts.push(newMessage);
+
+  fs.writeFileSync(contactsFile, JSON.stringify(contacts, null, 2));
+
+  res.json({ message: "Message saved successfully" });
+
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+
+
+//ARTIST SUBSCRIPTION
+
+
+
+const fs=require("fs");
+
+// endpoint for subscription
+app.post("/subscribe", (req, res) => {
+
+    const { fullname, email, payment } = req.body;
+
+    const newUser = {
+        fullname: fullname,
+        email: email,
+        payment: payment,
+        date: new Date()
+    };
+
+    let data = [];
+
+    if (fs.existsSync("subscriptions.json")) {
+        const fileData = fs.readFileSync("subscriptions.json");
+        data = JSON.parse(fileData);
+    }
+
+    data.push(newUser);
+
+    fs.writeFileSync("subscriptions.json", JSON.stringify(data, null, 2));
+
+    res.send("Subscription saved successfully!");
+
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+>>>>>>> 859dc2423036d3d17901e9253b0bbb68195390d5
 });
