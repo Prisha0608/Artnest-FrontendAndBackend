@@ -17,19 +17,20 @@ form.addEventListener("submit", async function(e) {
       `${API_URL}?login=${encodeURIComponent(loginInput)}&password=${encodeURIComponent(password)}`
     );
 
-    const data = await response.json();
-
-    // ❌ if credentials wrong
+    const users = await response.json();
+    
+    //  if credentials wrong
     if (!response.ok) {
-      errorMessage.textContent = data.message;
+      errorMessage.textContent = users.message;
       return;
     }
-
-    // ✅ correct login → redirect
-    if (data.role === "artist") {
+  
+     localStorage.setItem("loggedInUser", users.username);
+    // correct login → redirect
+    if (users.role === "artist") {
       window.location.href = "artist.html";
     } 
-    else if (data.role === "customer") {
+    else if (users.role === "customer") {
       window.location.href = "Gallery.html";
     }
 
@@ -37,15 +38,5 @@ form.addEventListener("submit", async function(e) {
     errorMessage.textContent = "Server connection error";
   }
 
-  const response = await fetch(`${API_URL}?username=${username}&password=${password}`);
-  const users = await response.json();
 
-  if (users.length > 0) {
-    alert("Login successful!");
-    // You could also store the user info in localStorage
-    localStorage.setItem("loggedInUser", username);
-    window.location.href = "artist.html"; // redirect to homepage
-  } else {
-    alert("Invalid username or password!");
-  }
 });

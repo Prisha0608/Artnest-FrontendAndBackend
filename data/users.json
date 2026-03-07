@@ -10,5 +10,17 @@
     "contact": "1234567899",
     "password": "Mehak@123",
     "role": "customer"
+  },
+  {
+    "username": "Elysa",
+    "contact": "prishakakkar27@gmail.com",
+    "password": "Vanshita@2002",
+    "role": "artist"
+  },
+  {
+    "username": "Selya Sharma",
+    "contact": "selyasharma5@gmail.com",
+    "password": "None@1234",
+    "role": "artist"
   }
 ]

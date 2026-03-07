@@ -221,7 +221,11 @@ app.delete("/remove-from-cart/:index", (req, res) => {
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
   return res.json({ success: true });
+<<<<<<< HEAD
   
+=======
+  res.json({ message: "Item removed" });
+>>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 });
 
 app.get("/login", (req, res) => {
@@ -289,6 +293,7 @@ app.listen(PORT, () => {
 });
 
 
+<<<<<<< HEAD
 
 
 
@@ -296,35 +301,46 @@ app.listen(PORT, () => {
 
 
 //ARTIST SUBSCRIPTION
+=======
+// ARTIST SUBSCRIPTION
+>>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 
+const subsFile = "./data/subscriptions.json";
 
+<<<<<<< HEAD
 // endpoint for subscription
+=======
+>>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 app.post("/subscribe", (req, res) => {
 
-    const { fullname, email, payment } = req.body;
+  const { fullname, email, payment } = req.body;
 
-    const newUser = {
-        fullname: fullname,
-        email: email,
-        payment: payment,
-        date: new Date()
-    };
+  const newUser = {
+    fullname,
+    email,
+    payment,
+    date: new Date()
+  };
 
-    let data = [];
+  let data = [];
 
-    if (fs.existsSync("subscriptions.json")) {
-        const fileData = fs.readFileSync("subscriptions.json");
-        data = JSON.parse(fileData);
-    }
+  if (fs.existsSync(subsFile)) {
+    const fileData = fs.readFileSync(subsFile);
+    data = JSON.parse(fileData);
+  }
 
-    data.push(newUser);
+  data.push(newUser);
 
-    fs.writeFileSync("subscriptions.json", JSON.stringify(data, null, 2));
+  fs.writeFileSync(subsFile, JSON.stringify(data, null, 2));
 
+<<<<<<< HEAD
     res.send("Subscription saved successfully!");
 
 });
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+=======
+  res.redirect("/t.html");
+>>>>>>> c43c22e7ed189fac851ac94812cb0923f5a9ed0f
 });
