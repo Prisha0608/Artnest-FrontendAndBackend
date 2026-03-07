@@ -151,10 +151,19 @@
       margin: 0 auto;
     }
     .slider-track {
-      display: flex;
-      transition: transform 0.5s ease;
-      gap: 20px;
-    }
+   display: flex;
+   overflow-x: auto;
+   scroll-behavior: smooth;
+   gap: 20px;
+
+   scrollbar-width: none;             
+   -ms-overflow-style: none;  
+}
+
+.slider-track::-webkit-scrollbar {
+   display: none;                      /* Chrome / Safari */
+}
+    
     .slide {
       min-width: 250px;
       background: #fff;
@@ -242,6 +251,15 @@
       padding-top: 15px;
       font-size: 0.9rem;
     }
+
+    .cart-btn{
+cursor:pointer;
+transition:transform 0.15s ease;
+}
+
+.cart-btn:active{
+transform:scale(0.95);
+}
 
     /* ===== Responsive ===== */
     @media (max-width: 992px) {

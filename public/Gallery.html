@@ -1,231 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ArtNest Gallery</title>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="gallery.css">
-  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtNest Gallery</title>
+
+<link rel="stylesheet" href="gallery.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 
-  <!-- ===== Navbar ===== -->
-  <nav>
-    <h1><i class="fas fa-palette"></i> ArtNest</h1>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-    <ul id="menu">
-      <li><a href="h.html"><i class="fas fa-home"></i> Home</a></li>
-      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
-      <li><a href="gallery.html"><i class="fas fa-images"></i> Gallery</a></li>
-      <li><a href="letstalk.html"><i class="fas fa-envelope"></i> Contact</a></li>
-      
-      <button onclick="goToCart()" class="cart-page-btn">
-🛒 Cart <span id="cart-count">0</span>
+<!-- ===== Navbar ===== -->
+
+<nav>
+<h1><i class="fas fa-palette"></i> ArtNest</h1>
+
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+<ul id="menu">
+<li><a href="h.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="letstalk.html">Contact</a></li>
+
+<li>
+<button type="button" onclick="goToCart()" class="cart-page-btn">
+🛒 Cart 
 </button>
+</li>
 
-    </ul>
-  </nav>
-
-  <!-- ===== Hero ===== -->
-  <section id="pic">
-    
-    <div><h1>“Buy. Create. Inspire.”</h1></div>
-
-  </section>
-
-  <!-- ===== Trending ===== -->
-  <section class="trend">
-    <h1>🔥 Trending Arts</h1>
-    <div class="trending-container">
-      <div class="trending-card">
-        <img src="resin2.jpeg" alt="Trending 1" />
-        <h3>Resin Bliss</h3>
-        <p class="price">₹1,000</p>
-        <button class="cart-btn" onclick="addToCart('Resin Bliss', 1000,'resin2.jpeg')">Add to Cart</button>
-      </div>
-      <div class="trending-card">
-        <img src="painting4.jpeg" alt="Trending 2" />
-        <h3>Night Ball</h3>
-        <p class="price">₹4,800</p>
-        <button class="cart-btn" onclick="addToCart('Night Ball', 4800,'painting4.jpeg')">Add to Cart</button>
-      </div>
-      <div class="trending-card">
-        <img src="crochet5.jpeg" alt="Trending 3" />
-        <h3>Purple Frame</h3>
-        <p class="price">₹1,500</p>
-        <button class="cart-btn" onclick="addToCart('Purple Frame', 1500,'crochet5.jpeg')">Add to Cart</button>
-      </div>
-      <div class="trending-card">
-        <img src="abstract3.jpeg" alt="Trending 4" />
-        <h3>Jokers Whisper</h3>
-        <p class="price">₹2,800</p>
-        <button class="cart-btn" onclick="addToCart('Jokers Whisper', 2800,'abstract3.jpeg')">Add to Cart</button>
-      </div>
-    </div>
-  </section>
-
-    <!-- Category 1: Landscape -->
-  <section class="category">
-    <h2>Paintings</h2>
-    <div class="info-card">
-      <h3>About Paintings</h3>
-      <p>“Every brushstroke tells a story of imagination and beauty.”</p>
-    </div>
-
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="painting1.jpeg"><h4>Green Valley</h4><p>₹2,500</p><button class="cart-btn" onclick="addToCart('Green Valley', 2500,'painting1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="painting2.jpeg"><h4>Calm River</h4><p>₹1,800</p><button class="cart-btn" onclick="addToCart('Calm River', 1800,'painting2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="painting3.jpeg"><h4>Night Peaks</h4><p>₹2,100</p><button class="cart-btn" onclick="addToCart('Night Peaks', 2100,'painting3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="painting4.jpeg"><h4>Night Ball</h4><p>₹4,800</p><button class="cart-btn" onclick="addToCart('Night Ball', 4800,'painting4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="painting5.jpeg"><h4>Bar Brew</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Bar Brew', 2200,'painting5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
+</ul>
+</nav>
 
 
-    <!-- Category 2: Abstract -->
-  <section class="category">
-    <h2>Abstract Art</h2>
-    <div class="info-card">
-      <h3>About Abstract Art</h3>
-      <p>“Abstract art speaks the language of emotion through colors, shapes, and freedom.”</p>
-    </div>
+<!-- ===== Hero ===== -->
 
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="abstract1.jpeg"><h4>Color Burst</h4><p>₹1,900</p><button class="cart-btn" onclick="addToCart('Color Burst', 1900,'abstract1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="abstract2.jpeg"><h4>Dream Flow</h4><p>₹2,000</p><button class="cart-btn" onclick="addToCart('Dream Flow', 2000,'abstract2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="abstract3.jpeg"><h4>Jokers Whisper</h4><p>₹2,800</p><button class="cart-btn" onclick="addToCart('Jokers Whisper', 2800,'abstract3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="abstract4.jpeg"><h4>Flora</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Flora', 2200,'abstract4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="abstract5.jpeg"><h4>Vision Wave</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Vision Wave', 2200,'abstract5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
+<section id="pic">
+<h1>“Buy. Create. Inspire.”</h1>
+</section>
 
-  <!-- Category 3: Portrait -->
-  <section class="category">
-    <h2>Portrait Art</h2>
-    <div class="info-card">
-      <h3>About Portrait Art</h3>
-      <p>"Portraits capture emotions, expressions, and stories — adding depth and life to any collection."</p>
-    </div>
 
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="portrait1.jpeg"><h4>Graceful Lady</h4><p>₹5,000</p><button class="cart-btn" onclick="addToCart('Graceful Lady',5000,'portrait1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="portrait2.jpeg"><h4>Gentle Smile</h4><p>₹5,300</p><button class="cart-btn" onclick="addToCart('Gentle Smile', 5300,'portrait2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="portrait3.jpeg"><h4>Mystic Gaze</h4><p>₹4,700</p><button class="cart-btn" onclick="addToCart('Mystic Gaze', 4700,'portrait3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="portrait4.jpeg"><h4>Catty</h4><p>₹5,200</p><button class="cart-btn" onclick="addToCart('Catty', 5200,'portrait4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="portrait5.jpeg"><h4>Golden</h4><p>₹6,200</p><button class="cart-btn" onclick="addToCart('Golden', 6200,'portrait5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
+<!-- ===== Trending ===== -->
 
-  <!--Category 4:-->
-  <section class="category">
-    <h2>Sculptures</h2>
-    <div class="info-card">
-      <h3>About Sculptures</h3>
-      <p>"Sculptures transform raw materials into timeless forms — each curve and texture telling a story carved in stone, metal, or clay."</p>
-    </div>
+<section class="trend">
+<h1>🔥 Trending Arts</h1>
+<div class="trending-container" id="trending"></div>
+</section>
 
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="sculpture1.jpeg"><h4>The Lady</h4><p>₹1,500</p><button class="cart-btn" onclick="addToCart('The Lady', 1500,'sculpture1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="sculpture2.jpeg"><h4>Hold</h4><p>₹1,800</p><button class="cart-btn" onclick="addToCart('Hold', 1800,'sculpture2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="sculpture3.jpeg"><h4>Pink Peaks</h4><p>₹2,100</p><button class="cart-btn" onclick="addToCart('Pink Peaks', 2100,'sculpture3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="sculpture4.jpeg"><h4>Green Wave</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Green Wave', 2200,'sculpture4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="sculpture5.jpeg"><h4>Mixed</h4><p>₹2,200</p><button class="cart-btn" onclick="addToCart('Mixed', 2200,'sculpture5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
 
-  <!--Category 5:-->
-  <section class="category">
-    <h2>Resin art</h2>
-    <div class="info-card">
-      <h3>About Resin Art</h3>
-      <p>"Inspired by oceans and flow, resin art freezes the beauty of movement and color into timeless designs."</p>
-    </div>
+<!-- ===== Categories ===== -->
 
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="resin1.jpeg"><h4>Tray</h4><p>₹1,000</p><button class="cart-btn" onclick="addToCart('Tray', 1000,'resin1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="resin2.jpeg"><h4>Resin Bliss</h4><p>₹1,000</p><button class="cart-btn" onclick="addToCart('Resin Bliss', 1000,'resin2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="resin3.jpeg"><h4>Bracelet</h4><p>₹500</p><button class="cart-btn" onclick="addToCart('Bracelet', 500,'resin3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="resin4.jpeg"><h4>Flower Tray</h4><p>₹1,100</p><button class="cart-btn" onclick="addToCart('Flower Tray', 1100,'resin4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="resin5.jpeg"><h4>Rings</h4><p>₹400</p><button class="cart-btn" onclick="addToCart('Rings', 400,'resin5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
+<section class="category">
+<h2>Paintings</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="paintings"></div>
+<button class="next">❯</button>
+</div>
+</section>
 
-  <!--Category 5:-->
-  <section class="category">
-    <h2>Resin art</h2>
-    <div class="info-card">
-      <h3>About Crocheting</h3>
-      <p>"Inspired by oceans and flow, resin art freezes the beauty of movement and color into timeless designs."</p>
-    </div>
 
-    <div class="slider">
-      <button class="prev">❮</button>
-      <div class="slider-track">
-        <div class="slide"><img src="crochet1.jpeg"><h4>Cute Plant</h4><p>₹200</p><button class="cart-btn" onclick="addToCart('Cute Plant', 200,'crochet1.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="crochet2.jpeg"><h4>Flower Scarf</h4><p>₹700</p><button class="cart-btn" onclick="addToCart('Flower Scarf', 700,'crochet2.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="crochet3.jpeg"><h4>Lily Bracelet</h4><p>₹100</p><button class="cart-btn" onclick="addToCart('Lily Bracelet', 100,'crochet3.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="crochet4.jpeg"><h4>Curtain Holder</h4><p>₹250</p><button class="cart-btn" onclick="addToCart('Curtain Holder', 250,'crochet4.jpeg')">Add to Cart</button></div>
-        <div class="slide"><img src="crochet5.jpeg"><h4>Purple Frame</h4><p>₹1,500</p><button class="cart-btn" onclick="addToCart('Purple Frame', 1500,'crochet5.jpeg')">Add to Cart</button></div>
-      </div>
-      <button class="next">❯</button>
-    </div>
-  </section>
+<section class="category">
+<h2>Abstract Art</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="abstract"></div>
+<button class="next">❯</button>
+</div>
+</section>
 
-  <!-- ===== Footer ===== -->
-  <footer>
-    <div class="footer-container">
-      <div class="footer-col">
-        <h2>ArtNest</h2>
-        <p>We bring art closer to you. Explore unique paintings, sculptures, and digital masterpieces by independent artists.</p>
-        <div class="socials">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="h.html">Home</a></li>
-          <li><a href="Gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="letstalk.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Info</h4>
-        <p><i class="fas fa-phone"></i> +91 12345 67890</p>
-        <p><i class="fas fa-envelope"></i> contact@artnest.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 ArtNest. All Rights Reserved.</p>
-    </div>
-  </footer>
+
+<section class="category">
+<h2>Portrait Art</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="portrait"></div>
+<button class="next">❯</button>
+</div>
+</section>
+
+
+<section class="category">
+<h2>Sculptures</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="sculpture"></div>
+<button class="next">❯</button>
+</div>
+</section>
+
+
+<section class="category">
+<h2>Resin Art</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="resin"></div>
+<button class="next">❯</button>
+</div>
+</section>
+
+
+<section class="category">
+<h2>Crochet</h2>
+<div class="slider">
+<button class="prev">❮</button>
+<div class="slider-track" id="crochet"></div>
+<button class="next">❯</button>
+</div>
+</section>
+
+
+<!-- ===== Footer ===== -->
+
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-col">
+<h2>ArtNest</h2>
+<p>We bring art closer to you.</p>
+</div>
+
+<div class="footer-col">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="h.html">Home</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="letstalk.html">Contact</a></li>
+</ul>
+</div>
+
+<div class="footer-col">
+<h4>Contact</h4>
+<p>📞 +91 12345 67890</p>
+<p>✉ contact@artnest.com</p>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2025 ArtNest. All Rights Reserved.</p>
+</div>
+
+</footer>
+
 <script src="gallery.js"></script>
-  
+
 </body>
 </html>

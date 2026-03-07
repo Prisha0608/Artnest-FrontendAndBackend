@@ -272,6 +272,9 @@
   padding-bottom: 150px; /* Add this to allow space for fixed footer */
 }
 
+.cart-item{
+transition: all 0.3s ease;
+}
 
     @media (max-width: 480px) {
       nav h1 {

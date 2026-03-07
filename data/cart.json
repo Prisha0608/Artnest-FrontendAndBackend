@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "name": "Hold",
+    "price": 1800,
+    "img": "sculpture2.jpeg"
+  },
+  {
+    "name": "Pink Peaks",
+    "price": 2100,
+    "img": "sculpture3.jpeg"
+  },
+  {
+    "name": "Purple Frame",
+    "price": 1500,
+    "img": "crochet5.jpeg"
+  },
+  {
+    "name": "Night Peaks",
+    "price": 2100,
+    "img": "painting3.jpeg"
+  },
+  {
+    "name": "Pink Peaks",
+    "price": 2100,
+    "img": "sculpture3.jpeg"
+  },
+  {
+    "name": "Pink Peaks",
+    "price": 2100,
+    "img": "sculpture3.jpeg"
+  },
+  {
+    "name": "Hold",
+    "price": 1800,
+    "img": "sculpture2.jpeg"
+  }
+]

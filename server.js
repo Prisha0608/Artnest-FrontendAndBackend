@@ -16,8 +16,7 @@ app.use(cors());
 // Json file paths
 const usersFile = "./data/users.json";
 
-// Selya JSON FILE PATH
-const cartFile = "./data/cart.json";
+
 
 // Configure multer
 const storage = multer.diskStorage({
@@ -120,8 +119,8 @@ app.listen(PORT, () => {
 
 
 //Selya
-
-
+// Selya JSON FILE PATH
+const cartFile = "./data/cart.json";
 // Add item to cart
 app.post("/add-to-cart", (req, res) => {
 
@@ -141,12 +140,13 @@ app.post("/add-to-cart", (req, res) => {
 
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
-  res.json({
-message: "Item added to cart",
-cartLength: cart.length
-});
-});
+  // 🔥 IMPORTANT — send ONLY JSON
+  return res.json({
+    success: true,
+    cartLength: cart.length
+  });
 
+});
 
 // Get cart items
 app.get("/cart", (req, res) => {
@@ -170,7 +170,7 @@ app.delete("/clear-cart", (req, res) => {
 
   fs.writeFileSync(cartFile, JSON.stringify([], null, 2));
 
-  res.json({ message: "Cart cleared" });
+  return res.json({ success: true });
 });
 
 
@@ -195,5 +195,5 @@ app.delete("/remove-from-cart/:index", (req, res) => {
 
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
-  res.json({ message: "Item removed" });
+  return res.json({ success: true });
 });

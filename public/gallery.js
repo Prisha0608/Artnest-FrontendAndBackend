@@ -1,84 +1,189 @@
-
-function goToCart() {
-  window.location.href = "cart.html";
-}
-
-
-function addToCart(name, price, img) {
-
-fetch("http://localhost:3000/add-to-cart",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-name:name,
-price:price,
-img:img
-})
-})
-
-.then(res=>res.json())
-
-.then(data=>{
-document.getElementById("cart-count").innerText = data.cartLength;
-alert(name + " added to cart!");
-})
-
-}
-
-function updateCartCount() {
-
-fetch("http://localhost:3000/cart")
-.then(res => res.json())
-.then(cart => {
-
-document.getElementById("cart-count").innerText = cart.length;
-
-})
-.catch(err => {
-console.log("Cart count error:", err);
+// 🚀 Block any accidental form submit
+document.addEventListener("submit", function(e){
+   e.preventDefault();
 });
 
-}
+// ================= DOM READY =================
 
 document.addEventListener("DOMContentLoaded", () => {
-updateCartCount();
-});
+   loadProducts()
+   initSliders()
+})
 
-   // Smooth and limited slider movement
 
-   document.addEventListener("DOMContentLoaded", function(){
+// ================= LOAD PRODUCTS =================
 
-document.querySelectorAll(".slider").forEach(slider => {
+function loadProducts() {
 
-  const track = slider.querySelector(".slider-track");
-  const slides = slider.querySelectorAll(".slide");
-  const prev = slider.querySelector(".prev");
-  const next = slider.querySelector(".next");
+    fetch("../data/products.json")
 
-  let index = 0;
+   .then(res => {
+      if (!res.ok) throw new Error("Product JSON not found")
+      return res.json()
+   })
 
-  if (slides.length === 0) return;
+   .then(data => {
 
-  const slideWidth = slides[0].offsetWidth + 20;
-  const totalWidth = track.scrollWidth;
-  const visibleWidth = slider.offsetWidth;
+      displayTrending(data.trending)
+      displayCategory("paintings", data.paintings)
+      displayCategory("abstract", data.abstract)
+      displayCategory("portrait", data.portrait)
+      displayCategory("sculpture", data.sculpture)
+      displayCategory("resin", data.resin)
+      displayCategory("crochet", data.crochet)
 
-  next.onclick = () => {
-    if ((index + 1) * slideWidth < totalWidth - visibleWidth / 2) {
-      index++;
-      track.style.transform = `translateX(-${index * slideWidth}px)`;
-    }
-  };
+      initSliders();
+   })
 
-  prev.onclick = () => {
-    if (index > 0) {
-      index--;
-      track.style.transform = `translateX(-${index * slideWidth}px)`;
-    }
-  };
+   .catch(err => {
+      console.log("Product load error:", err)
+   })
+}
 
-});
 
-});
+// ================= TRENDING =================
+
+function displayTrending(products){
+
+   const container = document.getElementById("trending")
+   if(!container || !products) return
+
+   container.innerHTML = ""
+
+   products.forEach(product => {
+
+      const card = document.createElement("div")
+      card.className = "trending-card"
+
+      card.innerHTML = `
+         <img src="${product.image}" alt="${product.name}">
+         <h3>${product.name}</h3>
+         <p class="price">₹${product.price}</p>
+         <button class="cart-btn" onclick="event.stopPropagation(); return false;">
+Add to Cart
+</button>
+      `
+
+      card.querySelector("button").addEventListener("click", function(event){
+    event.preventDefault();
+    addToCart(product);
+})
+
+      container.appendChild(card)
+
+   })
+}
+
+
+// ================= CATEGORY =================
+
+function displayCategory(id, products){
+
+   const container = document.getElementById(id)
+   if(!container || !products) return
+
+   container.innerHTML = ""
+
+   products.forEach(product => {
+
+      const slide = document.createElement("div")
+      slide.className = "slide"
+
+      slide.innerHTML = `
+         <img src="${product.image}" alt="${product.name}">
+         <h4>${product.name}</h4>
+         <p>₹${product.price}</p>
+         <button class="cart-btn" onclick="event.stopPropagation(); return false;">
+Add to Cart
+</button>
+      `
+
+      slide.querySelector("button").addEventListener("click", function(event){
+    event.preventDefault();      // stop default
+    addToCart(product);          // call function normally
+})
+
+      container.appendChild(slide)
+
+   })
+}
+
+
+// ================= ADD TO CART =================
+
+function addToCart(product) {
+    fetch("http://localhost:3000/add-to-cart", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: product.name,
+            price: product.price,
+            img: product.image
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        // No alert, no cart count update
+        console.log("✅ Item added successfully")
+    })
+    .catch(err => {
+        console.log("❌ Failed to add item:", err)
+    })
+}
+
+// ================= SLIDER =================
+
+function initSliders(){
+
+   document.querySelectorAll(".slider").forEach(slider => {
+
+      const track = slider.querySelector(".slider-track")
+      const prev = slider.querySelector(".prev")
+      const next = slider.querySelector(".next")
+
+      if(!track) return
+
+      const scrollAmount = () => {
+         return track.firstElementChild
+            ? track.firstElementChild.offsetWidth + 16
+            : 250
+      }
+
+      next?.addEventListener("click", () => {
+         track.scrollBy({
+            left: scrollAmount(),
+            behavior: "smooth"
+         })
+      })
+
+      prev?.addEventListener("click", () => {
+         track.scrollBy({
+            left: -scrollAmount(),
+            behavior: "smooth"
+         })
+      })
+
+   })
+
+}
+
+
+// ================= NAV MENU TOGGLE =================
+
+function toggleMenu(){
+
+   document.getElementById("menu")
+   .classList.toggle("active")
+
+}
+
+
+// ================= GO TO CART =================
+
+function goToCart(){
+   window.location.href = "cart.html"
+}
+
+
