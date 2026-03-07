@@ -22,5 +22,14 @@
     "contact": "selyasharma5@gmail.com",
     "password": "None@1234",
     "role": "artist"
+  },
+  {
+    "username": "Prisha",
+    "contact": "prish@gmail.com",
+    "password": "None@1234",
+    "role": "artist",
+    "fullname": "Prisha",
+    "bio": "hello",
+    "social": "http://vansh.com"
   }
 ]
