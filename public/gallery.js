@@ -53,7 +53,7 @@ function displayTrending(products){
       card.className = "trending-card"
 
       card.innerHTML = `
-         <img src="${product.image}" alt="${product.name}">
+         <img src="/${product.image}" alt="${product.name}">
          <h3>${product.name}</h3>
          <p class="price">₹${product.price}</p>
          <button class="cart-btn" onclick="event.stopPropagation(); return false;">
@@ -87,7 +87,7 @@ function displayCategory(id, products){
       slide.className = "slide"
 
       slide.innerHTML = `
-         <img src="${product.image}" alt="${product.name}">
+         <img src="/${product.image}" alt="${product.name}">
          <h4>${product.name}</h4>
          <p>₹${product.price}</p>
          <button class="cart-btn" onclick="event.stopPropagation(); return false;">
