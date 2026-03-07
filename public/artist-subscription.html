@@ -299,8 +299,8 @@
       const confirmation = document.getElementById('confirmation');
       const receipt = document.getElementById('receipt');
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+      form.addEventListener('submit', () => {
+        
 
         const name = (document.getElementById('name') || {}).value || '';
         const email = (document.getElementById('email') || {}).value || '';
