@@ -1,7 +1,4 @@
-// 🚀 Block any accidental form submit
-document.addEventListener("submit", function(e){
-   e.preventDefault();
-});
+
 
 // ================= DOM READY =================
 

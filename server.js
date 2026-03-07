@@ -141,7 +141,11 @@ app.post("/users", (req, res) => {
 
 //Selya
 // Selya JSON FILE PATH
-const cartFile = "./data/cart.json";
+const path = require("path");
+const cartFile = path.join(__dirname, "data", "cart.json");
+if (!fs.existsSync(path.join(__dirname, "data"))) {
+    fs.mkdirSync(path.join(__dirname, "data"));
+}
 // Add item to cart
 app.post("/add-to-cart", (req, res) => {
 
@@ -216,10 +220,8 @@ app.delete("/remove-from-cart/:index", (req, res) => {
 
   fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
 
-<<<<<<< HEAD
   return res.json({ success: true });
-=======
-  res.json({ message: "Item removed" });
+  
 });
 
 app.get("/login", (req, res) => {
@@ -248,6 +250,13 @@ app.get("/login", (req, res) => {
 
   });
 });
+
+//================================================================================================//
+
+
+
+
+
 
 // Save contact form messages
 app.post("/contacts", (req, res) => {
@@ -280,11 +289,14 @@ app.listen(PORT, () => {
 });
 
 
+
+
+
+
+
+
 //ARTIST SUBSCRIPTION
 
-
-
-const fs=require("fs");
 
 // endpoint for subscription
 app.post("/subscribe", (req, res) => {
@@ -315,5 +327,4 @@ app.post("/subscribe", (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
->>>>>>> 859dc2423036d3d17901e9253b0bbb68195390d5
 });
