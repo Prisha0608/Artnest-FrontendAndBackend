@@ -141,6 +141,11 @@ app.post("/users", (req, res) => {
 
 //Selya
 // Selya JSON FILE PATH
+
+app.get("/products", (req, res) => {
+  res.sendFile(__dirname + "/data/products.json");
+});
+
 const cartFile = path.join(__dirname, "data", "cart.json");
 if (!fs.existsSync(path.join(__dirname, "data"))) {
     fs.mkdirSync(path.join(__dirname, "data"));

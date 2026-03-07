@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadProducts() {
 
-    fetch("../data/products.json")
+    fetch("/products")
 
    .then(res => {
       if (!res.ok) throw new Error("Product JSON not found")
