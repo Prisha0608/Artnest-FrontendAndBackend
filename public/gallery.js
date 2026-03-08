@@ -1,6 +1,4 @@
-
-
-// ================= DOM READY =================
+// ================= DOM READY =================//
 
 document.addEventListener("DOMContentLoaded", () => {
    loadProducts()
@@ -8,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 
-// ================= LOAD PRODUCTS =================
+// ================= LOAD PRODUCTS =================//
 
 function loadProducts() {
 
@@ -38,7 +36,7 @@ function loadProducts() {
 }
 
 
-// ================= TRENDING =================
+//================= TRENDING =================//
 
 function displayTrending(products){
 
@@ -72,7 +70,7 @@ Add to Cart
 }
 
 
-// ================= CATEGORY =================
+//================= CATEGORY =================//
 
 function displayCategory(id, products){
 
@@ -106,7 +104,7 @@ Add to Cart
 }
 
 
-// ================= ADD TO CART =================
+// ================= ADD TO CART ================= //
 
 function addToCart(product) {
     fetch("http://localhost:3000/cart/add-to-cart", {
@@ -124,13 +122,14 @@ function addToCart(product) {
     .then(data => {
         // No alert, no cart count update
         console.log("✅ Item added successfully")
+        alert("Item added successfully");
     })
     .catch(err => {
         console.log("❌ Failed to add item:", err)
     })
 }
 
-// ================= SLIDER =================
+// ================= SLIDER ================= //
 
 function initSliders(){
 
@@ -167,7 +166,7 @@ function initSliders(){
 }
 
 
-// ================= NAV MENU TOGGLE =================
+// ================= NAV MENU TOGGLE ================= //
 
 function toggleMenu(){
 
@@ -177,7 +176,7 @@ function toggleMenu(){
 }
 
 
-// ================= GO TO CART =================
+// ================= GO TO CART ================= //
 
 function goToCart(){
    window.location.href = "cart.html"

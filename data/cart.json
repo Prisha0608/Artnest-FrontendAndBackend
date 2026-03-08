@@ -1,18 +1,13 @@
 [
   {
-    "name": "Pink Peaks",
-    "price": 2100,
-    "img": "sculpture3.jpeg"
-  },
-  {
+<<<<<<< HEAD
+    "name": "Night Ball",
+    "price": 4800,
+    "img": "painting4.jpeg"
+=======
     "name": "Hold",
     "price": 1800,
     "img": "sculpture2.jpeg"
-  },
-  {
-    "name": "Purple Frame",
-    "price": 1500,
-    "img": "crochet5.jpeg"
   },
   {
     "name": "Purple Frame",
@@ -38,5 +33,16 @@
     "name": "Flora",
     "price": 2200,
     "img": "abstract4.jpeg"
+  },
+  {
+    "name": "Resin Bliss",
+    "price": 1000,
+    "img": "resin2.jpeg"
+  },
+  {
+    "name": "Night Ball",
+    "price": 4800,
+    "img": "painting4.jpeg"
+>>>>>>> 283ff0606d84c6359c6bce0ee23a5a3e2a7cbc3f
   }
 ]
