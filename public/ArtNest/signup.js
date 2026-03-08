@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/users";
+const API_URL = "http://localhost:3000/users/signup";
 
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();

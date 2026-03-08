@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/users";
+const API_URL = "http://localhost:3000/users/signup";
 
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -55,7 +55,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   if (!isValid) return;
 
   // Check if username already exists
-  const response = await fetch(`${API_URL}?username=${username}`);
+  const response = await fetch(`http://localhost:3000/users/userDetails?username=${username}`);
   const existingUsers = await response.json();
 
   if (existingUsers.length > 0) {

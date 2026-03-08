@@ -134,7 +134,7 @@ totalElem.innerText=total
 
 function removeItem(index){
 
-fetch("http://localhost:3000/remove-from-cart/"+index,{
+fetch("http://localhost:3000/cart/remove-from-cart/"+index,{
 method:"DELETE"
 })
 .then(()=>loadCart())
@@ -143,7 +143,7 @@ method:"DELETE"
 
 function clearCart(){
 
-fetch("http://localhost:3000/clear-cart",{
+fetch("http://localhost:3000/cart/clear-cart",{
 method:"DELETE"
 })
 .then(()=>loadCart())

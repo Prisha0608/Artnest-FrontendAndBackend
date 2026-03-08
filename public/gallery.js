@@ -107,7 +107,7 @@ Add to Cart
 // ================= ADD TO CART ================= //
 
 function addToCart(product) {
-    fetch("http://localhost:3000/add-to-cart", {
+    fetch("http://localhost:3000/cart/add-to-cart", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
