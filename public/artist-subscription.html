@@ -190,10 +190,12 @@
 
     <div class="plan-summary" id="planSummary">Loading your plan details...</div>
 
-    <form id="subscriptionForm" action="/subscribe" method="POST" novalidate>
+    <form id="subscriptionForm" action="/subscribe" method="POST">
 
 <label for="name">Full Name</label>
-<input type="text" id="name" name="fullname" placeholder="Enter your full name" required>
+<input type="text" id="name" name="fullname"
+pattern="[A-Za-z ]{3,}"
+placeholder="Enter your full name" required>
 
 <label for="email">Email</label>
 <input type="email" id="email" name="email" placeholder="Enter your email" required>
@@ -219,7 +221,7 @@
       <h3>Payment Successful 🎉</h3>
       <p>Thank you for joining the ArtNest community!</p>
       <div class="receipt" id="receipt"></div>
-      <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+      <a href="t.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
     </div>
   </div>
 
@@ -243,17 +245,26 @@
       const paymentTemplates = {
         UPI: `
           <label for="upiId">Enter UPI ID</label>
-          <input type="text" id="upiId" placeholder="example@upi" required />
+          <input type="text" id="upiId"
+pattern="[a-zA-Z0-9._-]+@[a-zA-Z]+"
+placeholder="example@upi"
+required />
         `,
         Card: `
           <label for="cardNumber">Card Number</label>
-          <input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
+          <input type="text" id="cardNumber"
+pattern="[0-9]{16}"
+placeholder="1234567812345678"
+required />
           <label for="cardName">Card Holder Name</label>
           <input type="text" id="cardName" placeholder="Name on card" required />
           <label for="expiry">Expiry Date</label>
           <input type="month" id="expiry" required />
           <label for="cvv">CVV</label>
-          <input type="password" id="cvv" maxlength="4" placeholder="***" required />
+          <input type="password" id="cvv"
+pattern="[0-9]{3,4}"
+maxlength="4"
+required />
         `,
         PayPal: `
           <label for="paypalEmail">PayPal Email</label>
@@ -299,41 +310,65 @@
       const confirmation = document.getElementById('confirmation');
       const receipt = document.getElementById('receipt');
 
-      form.addEventListener('submit', () => {
-        
+      form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-        const name = (document.getElementById('name') || {}).value || '';
-        const email = (document.getElementById('email') || {}).value || '';
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
 
-        if (!chosenMethod) {
-          alert('Please select a payment method.');
-          return;
-        }
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
 
+  if (!chosenMethod) {
+    alert('Please select a payment method.');
+    return;
+  }
 
-        const requiredFields = paymentFields.querySelectorAll('input[required], select[required]');
-        for (let rf of requiredFields) {
-          if (!rf.value.trim()) {
-            rf.focus();
-            alert('Please complete the payment details.');
-            return;
-          }
-        }
+  const requiredFields = paymentFields.querySelectorAll('input[required], select[required]');
+  for (let rf of requiredFields) {
+    if (!rf.value.trim()) {
+      rf.focus();
+      alert('Please complete the payment details.');
+      return;
+    }
+  }
 
+  try {
+    const response = await fetch('/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fullname: name,
+        email: email,
+        payment: chosenMethod,
+        plan: selectedPlan.name
+      })
+    });
 
-        form.style.display = 'none';
-        planSummary.style.display = 'none';
-        confirmation.style.display = 'block';
+    const result = await response.json();
 
+    if (result.success) {
+      form.style.display = 'none';
+      planSummary.style.display = 'none';
+      confirmation.style.display = 'block';
 
-        receipt.innerHTML = `
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Plan:</strong> ${selectedPlan.name}</p>
-          <p><strong>Amount Paid:</strong> ₹${selectedPlan.price}</p>
-          <p><strong>Payment Method:</strong> ${escapeHtml(chosenMethod)}</p>
-        `;
-      });
+      receipt.innerHTML = `
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Plan:</strong> ${selectedPlan.name}</p>
+        <p><strong>Amount Paid:</strong> ₹${selectedPlan.price}</p>
+        <p><strong>Payment Method:</strong> ${escapeHtml(chosenMethod)}</p>
+      `;
+    }
+
+  } catch (error) {
+    alert("Failed to submit subscription.");
+  }
+});
 
       function escapeHtml(str) {
         return String(str)
