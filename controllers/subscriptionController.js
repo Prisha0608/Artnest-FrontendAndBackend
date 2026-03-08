@@ -25,5 +25,5 @@ exports.subscribeArtist = (req, res) => {
 
   fs.writeFileSync(subsFile, JSON.stringify(data, null, 2));
 
-  res.send("Subscription saved successfully!");
+  res.json({ success: true });
 };
