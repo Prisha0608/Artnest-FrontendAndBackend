@@ -2,8 +2,8 @@ const API_URL = "http://localhost:3000/users/login";
 
 const form = document.getElementById("loginForm");
 
-form.addEventListener("submit", async function(e) {
-  e.preventDefault();   // page reload stop
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   const loginInput = document.getElementById("login").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -12,31 +12,40 @@ form.addEventListener("submit", async function(e) {
   errorMessage.textContent = "";
 
   try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        login: loginInput,
+        password: password
+      })
+    });
 
-    const response = await fetch(
-      `${API_URL}?login=${encodeURIComponent(loginInput)}&password=${encodeURIComponent(password)}`
-    );
+    const data = await response.json();
 
-    const users = await response.json();
-    
-    //  if credentials wrong
     if (!response.ok) {
-      errorMessage.textContent = users.message;
+      errorMessage.textContent = data.message || "Invalid credentials";
       return;
     }
-  
-     localStorage.setItem("loggedInUser", users.username);
-    // correct login → redirect
-    if (users.role === "artist") {
+
+    // ✅ SAVE JWT TOKEN (IMPORTANT for protected routes)
+    localStorage.setItem("token", data.token);
+
+    // ✅ SAVE USER INFO
+    localStorage.setItem("loggedInUser", data.user.username);
+    localStorage.setItem("role", data.user.role);
+
+    // redirect based on role
+    if (data.user.role === "artist") {
       window.location.href = "artist.html";
-    } 
-    else if (users.role === "customer") {
+    } else {
       window.location.href = "Gallery.html";
     }
 
   } catch (error) {
+    console.error(error);
     errorMessage.textContent = "Server connection error";
   }
-
-
 });

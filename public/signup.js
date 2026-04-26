@@ -1,6 +1,8 @@
 const API_URL = "http://localhost:3000/users/signup";
 
-document.getElementById("signupForm").addEventListener("submit", async (e) => {
+const form = document.getElementById("signupForm");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   // Clear previous errors
@@ -10,18 +12,16 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const contact = document.getElementById("contact").value.trim();
   const password = document.getElementById("password").value.trim();
   const confirmPassword = document.getElementById("confirmPassword").value.trim();
-
   const role = document.querySelector('input[name="role"]:checked');
 
   let isValid = true;
 
-  // Username validation
+  // Validation
   if (!username) {
     document.getElementById("usernameError").textContent = "Username is required.";
     isValid = false;
   }
 
-  // Email or phone validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phonePattern = /^[0-9]{10}$/;
 
@@ -31,14 +31,14 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     isValid = false;
   }
 
-  // Role validation
   if (!role) {
-    document.getElementById("roleError").textContent = "Please select Artist or Customer.";
+    document.getElementById("roleError").textContent =
+      "Please select Artist or Customer.";
     isValid = false;
   }
 
-  // Password validation
-  const passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+  const passPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   if (!passPattern.test(password)) {
     document.getElementById("passwordError").textContent =
@@ -46,38 +46,66 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     isValid = false;
   }
 
-  // Confirm password validation
   if (password !== confirmPassword) {
-    document.getElementById("confirmError").textContent = "Passwords do not match.";
+    document.getElementById("confirmError").textContent =
+      "Passwords do not match.";
     isValid = false;
   }
 
   if (!isValid) return;
 
-  // Check if username already exists
-  const response = await fetch(`http://localhost:3000/users/userDetails?username=${username}`);
-  const existingUsers = await response.json();
+  try {
+    // 1. Check if user already exists
+    const checkRes = await fetch(
+      `http://localhost:3000/users/userDetails?username=${encodeURIComponent(username)}`
+    );
 
-  if (existingUsers.length > 0) {
-    document.getElementById("usernameError").textContent = "Username already exists!";
-    return;
+    const existingUsers = await checkRes.json();
+
+    if (!checkRes.ok) {
+      throw new Error("Failed to check existing user");
+    }
+
+    if (existingUsers.length > 0) {
+      document.getElementById("usernameError").textContent =
+        "Username already exists!";
+      return;
+    }
+
+    // 2. Register user
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        contact,
+        password,
+        role: role.value,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      document.getElementById("confirmError").textContent =
+        data.message || "Signup failed!";
+      return;
+    }
+
+    // Success message
+    document.getElementById("confirmError").style.color = "green";
+    document.getElementById("confirmError").textContent =
+      "Signup successful! Redirecting...";
+
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+
+  } catch (error) {
+    console.error("Signup error:", error);
+    document.getElementById("confirmError").textContent =
+      "Server connection error";
   }
-
-  // Register user
-  await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username,
-      contact,
-      password,
-      role: role.value
-    }),
-  });
-
-  document.getElementById("confirmError").style.color = "green";
-  document.getElementById("confirmError").textContent =
-    "Signup successful! Redirecting to login...";
-
-  setTimeout(() => (window.location.href = "login.html"), 2000);
 });

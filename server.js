@@ -45,8 +45,14 @@ app.use("/subscribe", subscriptionRoutes);
 
 // ERROR HANDLER (MUST BE LAST)
 app.use(errorHandler);
-connectDB();
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+      console.log("MongoDB Connected ✅");
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB Connection Failed ❌", err);
+    process.exit(1);
+  });
