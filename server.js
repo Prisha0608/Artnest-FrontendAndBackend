@@ -24,11 +24,6 @@ dns.setServers(["1.1.1.1", "1.0.0.1"]);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// DB Connection
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("DB Error:", err));
 
 // Middlewares (GLOBAL)
 app.use(cors());

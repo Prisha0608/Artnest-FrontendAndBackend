@@ -1,113 +1,89 @@
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-const fs = require("fs");
+// GET USERS (MongoDB)
+exports.getUser = async (req, res) => {
+  try {
+    if (req.query.username) {
+      const user = await User.find({ username: req.query.username });
+      return res.json(user);
+    }
 
-const usersFile = "./data/users.json";
+    const users = await User.find();
+    res.json(users);
 
-exports.getUser = (req, res) => {
-
-  if (!fs.existsSync(usersFile)) {
-    return res.json([]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  const users = JSON.parse(fs.readFileSync(usersFile));
-
-  if (req.query.username) {
-    const filtered = users.filter(
-      user => user.username === req.query.username
-    );
-    return res.json(filtered);
-  }
-
-  res.json(users);
 };
 
 exports.registerUser = async (req, res) => {
-  let users = [];
-
-  if (fs.existsSync(usersFile)) {
-    users = JSON.parse(fs.readFileSync(usersFile));
-  }
-
   try {
-    // 🔐 hash password
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const { username, contact, password, role, fullname, bio, social } = req.body;
 
-    const newUser = {
-      ...req.body,
+    // check if user exists
+    const existingUser = await User.findOne({ contact });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      username,
+      contact,
       password: hashedPassword,
-    };
+      role,
+      fullname,
+      bio,
+      social,
+    });
 
-    users.push(newUser);
-
-    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+    await newUser.save();
 
     res.json({ message: "User registered successfully" });
 
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.loginUser = async (req, res) => {
-
-  const { login, password } = req.query;
-
-  const users = JSON.parse(fs.readFileSync(usersFile));
-
-  const user = users.find(
-    (u) =>
-      (u.username === login || u.contact === login)
-  );
-
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
   try {
-    // 🔐 compare password
+    const { login, password } = req.body;
+
+    const user = await User.findOne({
+      $or: [
+        { username: login },
+        { contact: login }
+      ]
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.json(user);
+    res.json({
+      message: "Login successful",
+      user: {
+        username: user.username,
+        contact: user.contact,
+        role: user.role
+      }
+    });
 
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};exports.loginUser = async (req, res) => {
-
-  const { login, password } = req.query;
-
-  const users = JSON.parse(fs.readFileSync(usersFile));
-
-  const user = users.find(
-    (u) =>
-      (u.username === login || u.contact === login)
-  );
-
-  if (!user) {
-    return res.status(401).json({ message: "Invalid credentials" });
-  }
-
-  try {
-    // 🔐 compare password
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    res.json(user);
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.updateProfile = (req, res) => {
 

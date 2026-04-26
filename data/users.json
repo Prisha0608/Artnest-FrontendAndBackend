@@ -34,5 +34,11 @@
     "fullname": "Prisha",
     "bio": "hello",
     "social": "http://vansh.com"
+  },
+  {
+    "username": "Harleen",
+    "contact": "harleen5@gmail.com",
+    "password": "$2b$10$Z2UtxrRtwytiiEFGvdQVmeVaNUXSKRyjuzGMDiNeM606o4.rivSTO",
+    "role": "artist"
   }
 ]
