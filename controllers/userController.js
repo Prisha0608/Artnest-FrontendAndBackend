@@ -4,16 +4,27 @@ const jwt = require("jsonwebtoken");
 
 exports.getUser = async (req, res) => {
   try {
-    if (req.query.username) {
-      const user = await User.find({ username: req.query.username });
-      return res.json(user);
+    // Logged-in user profile (from JWT)
+   
+    if (req.user) {
+        const user = await User.findById(req.user.id).select("-password");
+
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+
+      return res.status(200).json({
+        user
+      });
     }
 
-    const users = await User.find();
-    res.json(users);
-
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      message: "Error fetching user(s)",
+      error: error.message
+    });
   }
 };
 
@@ -86,27 +97,35 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-exports.updateProfile = (req, res) => {
+exports.updateProfile = async (req, res) => {
+  try {
+    const { username, fullname, bio, social, email } = req.body;
+    console.log("Updating profile for:", req.body);
+    // Find user by username and update fields
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      {
+        fullname: fullname,
+        bio: bio,
+        social: social,
+        contact: email
+      },
+      { new: true } // return updated document
+    );
 
-  const { username, fullname, bio, social, email } = req.body;
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  let users = JSON.parse(fs.readFileSync(usersFile));
+    res.json({
+      message: "Profile updated",
+      user: updatedUser
+    });
 
-  const userIndex = users.findIndex(u => u.username === username);
-
-  if (userIndex === -1) {
-    return res.status(404).json({ message: "User not found" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating profile",
+      error: error.message
+    });
   }
-
-  users[userIndex].fullname = fullname;
-  users[userIndex].bio = bio;
-  users[userIndex].contact = email;
-  users[userIndex].social = social;
-
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-
-  res.json({
-    message: "Profile updated",
-    user: users[userIndex]
-  });
 };

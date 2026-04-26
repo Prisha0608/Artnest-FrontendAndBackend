@@ -167,12 +167,12 @@
   <div id="toast" class="toast"></div>
 
   <!-- JavaScript -->
-  <script>
+ <script>
 // ===============================
 // LOGIN CHECK
 // ===============================
-
 const toast = document.getElementById("toast");
+const token = localStorage.getItem("token");
 const username = localStorage.getItem("loggedInUser");
 const welcomeText = document.getElementById("welcomeText");
 
@@ -196,14 +196,12 @@ function showToast(message, type = "success") {
   setTimeout(() => {
     toast.className = "toast";
   }, 3000);
-
 }
 
 
 // ===============================
 // UPLOAD MODAL
 // ===============================
-
 const uploadModal = document.getElementById("uploadModal");
 const openUploadBtn = document.getElementById("openUploadModal");
 const closeUpload = document.querySelector(".close-upload");
@@ -224,9 +222,7 @@ closeUpload.onclick = () => {
 // ===============================
 // UPLOAD ARTWORK
 // ===============================
-
 uploadForm.addEventListener("submit", async (e) => {
-
   e.preventDefault();
 
   if (!artFile.files.length) {
@@ -240,85 +236,72 @@ uploadForm.addEventListener("submit", async (e) => {
   }
 
   const formData = new FormData();
-
   formData.append("artwork", artFile.files[0]);
   formData.append("title", artFile.files[0].name);
   formData.append("price", artPrice.value);
   formData.append("username", username);
 
-  try {
 
+  try {
     const response = await fetch("http://localhost:3000/artworks/upload", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       body: formData
     });
 
-    if (response.ok) {
+    const result = await response.json();
 
+    if (response.ok) {
       showToast("Artwork uploaded successfully");
       uploadModal.style.display = "none";
       uploadForm.reset();
-
     } else {
-
-      showToast("Upload failed", "error");
-
+      showToast(result.message || "Upload failed", "error");
     }
 
   } catch (error) {
-
     showToast("Server error", "error");
-
   }
-
 });
 
 
 // ===============================
 // PROFILE MODAL
 // ===============================
-
 const profileModal = document.getElementById("editProfileModal");
 const openProfileBtn = document.getElementById("profileModal");
 const closeProfile = document.querySelector(".close");
 
-let originalData = {};
-
 openProfileBtn.addEventListener("click", async () => {
-
   profileModal.style.display = "flex";
 
   try {
+    const response = await fetch("http://localhost:3000/users/userDetails", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-    const response = await fetch(
-      `http://localhost:3000/users/userDetails?username=${username}`
-    );
+    const result = await response.json();
 
-    const userArray = await response.json();
-    const user = userArray[0];
-    if (!user) {
-      showToast("User not found", "error");
+    if (!response.ok) {
+      showToast(result.message || "Unable to load profile", "error");
       return;
     }
 
-    originalData = {
-      fullname: user.fullname || "",
-      bio: user.bio || "",
-      social: user.social || "",
-      email: user.contact || ""
-    };
+    const user = result.user;
 
-    document.getElementById("name").value = originalData.fullname;
-    document.getElementById("bio").value = originalData.bio;
-    document.getElementById("social").value = originalData.social;
-    document.getElementById("email").value = originalData.email;
+    document.getElementById("name").value = user.fullname || "";
+    document.getElementById("bio").value = user.bio || "";
+    document.getElementById("social").value = user.social || "";
+    document.getElementById("email").value = user.contact || "";
 
   } catch (error) {
-
-    showToast("Unable to load profile", "error");
-
+    showToast("Server error", "error");
   }
-
 });
 
 closeProfile.onclick = () => {
@@ -329,7 +312,6 @@ closeProfile.onclick = () => {
 // ===============================
 // SAVE PROFILE
 // ===============================
-
 document
   .getElementById("editProfileForm")
   .addEventListener("submit", async (e) => {
@@ -345,47 +327,34 @@ document
     };
 
     try {
-
       const response = await fetch("http://localhost:3000/users/profile", {
-
         method: "POST",
-
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
-
         body: JSON.stringify(newData)
-
       });
 
       const result = await response.json();
 
       if (response.ok) {
-
         showToast("Profile updated successfully");
         profileModal.style.display = "none";
-
       } else {
-
         showToast(result.message || "Update failed", "error");
-
       }
 
     } catch (error) {
-
       showToast("Server error", "error");
-
     }
-
   });
 
 
 // ===============================
 // CLOSE MODALS ON OUTSIDE CLICK
 // ===============================
-
 window.onclick = function (event) {
-
   if (event.target === uploadModal) {
     uploadModal.style.display = "none";
   }
@@ -393,11 +362,8 @@ window.onclick = function (event) {
   if (event.target === profileModal) {
     profileModal.style.display = "none";
   }
-
 };
-
-
-  </script>
+</script>
 </body>
 
 </html>
