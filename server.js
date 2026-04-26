@@ -21,7 +21,7 @@ const errorHandler = require("./middleware/errorHandler");
 dns.setServers(["1.1.1.1", "1.0.0.1"]);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // DB Connection
 mongoose
