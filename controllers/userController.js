@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 const fs = require("fs");
 
 const usersFile = "./data/users.json";
@@ -20,39 +22,92 @@ exports.getUser = (req, res) => {
   res.json(users);
 };
 
-exports.registerUser = (req, res) => {
-
+exports.registerUser = async (req, res) => {
   let users = [];
 
   if (fs.existsSync(usersFile)) {
     users = JSON.parse(fs.readFileSync(usersFile));
   }
 
-  users.push(req.body);
+  try {
+    // 🔐 hash password
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+    const newUser = {
+      ...req.body,
+      password: hashedPassword,
+    };
 
-  res.json({ message: "User registered successfully" });
+    users.push(newUser);
+
+    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+
+    res.json({ message: "User registered successfully" });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-exports.loginUser = (req, res) => {
+
+exports.loginUser = async (req, res) => {
 
   const { login, password } = req.query;
 
   const users = JSON.parse(fs.readFileSync(usersFile));
- 
+
   const user = users.find(
     (u) =>
-      (u.username === login || u.contact === login) &&
-      u.password === password
+      (u.username === login || u.contact === login)
   );
 
   if (!user) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  res.json(user);
+  try {
+    // 🔐 compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.json(user);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};exports.loginUser = async (req, res) => {
+
+  const { login, password } = req.query;
+
+  const users = JSON.parse(fs.readFileSync(usersFile));
+
+  const user = users.find(
+    (u) =>
+      (u.username === login || u.contact === login)
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+  try {
+    // 🔐 compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.json(user);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
+
 
 exports.updateProfile = (req, res) => {
 
