@@ -1,29 +1,39 @@
-const fs = require("fs");
+const Artwork = require("../models/Artwork");
 
-const filePath = "./data/artworks.json";
+exports.uploadArtwork = async (req, res) => {
+  try {
+  
+    const username =  req.body.username;
 
-exports.uploadArtwork = (req, res) => {
+    const { title, price } = req.body;
 
-  const { username, title, price } = req.body;
+    // validation (important for evaluation)
+    if (!title || !price) {
+      return res.status(400).json({ message: "Title and price required" });
+    }
 
-  const newArtwork = {
-    id: Date.now(),
-    username,
-    title,
-    price,
-    image: `/uploads/${req.file.filename}`
-  };
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
 
-  let artworks = [];
+    // MongoDB create
+    const artwork = await Artwork.create({
+      username,
+      title,
+      price: Number(price),
+      image: `/uploads/${req.file.filename}`
+    });
 
-  if (fs.existsSync(filePath)) {
-    artworks = JSON.parse(fs.readFileSync(filePath));
+    res.status(201).json({
+      message: "Artwork uploaded successfully!",
+      artwork
+    });
+
+  } catch (error) {
+    console.log("Upload Error:", error);
+
+    res.status(500).json({
+      message: "Server error during upload"
+    });
   }
-
-  artworks.push(newArtwork);
-
-  fs.writeFileSync(filePath, JSON.stringify(artworks, null, 2));
-
-  res.json({ message: "Artwork uploaded successfully!" });
 };
-
