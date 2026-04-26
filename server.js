@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dns = require("node:dns");
 
 require("dotenv").config();
+const connectDB = require("./database/dbconnection");
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -49,7 +50,7 @@ app.use("/subscribe", subscriptionRoutes);
 
 // ERROR HANDLER (MUST BE LAST)
 app.use(errorHandler);
-
+connectDB();
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
