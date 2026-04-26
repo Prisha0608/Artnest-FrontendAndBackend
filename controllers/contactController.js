@@ -1,28 +1,15 @@
-const fs = require("fs");
-const path = require("path");
+const Contact = require("../models/Contact");
 
-const contactsFile = path.join(__dirname, "..", "data", "contacts.json");
+exports.saveContact = async (req, res) => {
+  try {
+    const newMessage = new Contact(req.body);
+    await newMessage.save();
 
-exports.saveContact = (req, res) => {
+    res.status(201).json({
+      message: "Message saved in MongoDB successfully"
+    });
 
-  let contacts = [];
-
-  if (fs.existsSync(contactsFile)) {
-    contacts = JSON.parse(fs.readFileSync(contactsFile));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-
-  const newMessage = {
-    id: Date.now(),
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone,
-    message: req.body.message
-  };
-
-  contacts.push(newMessage);
-
-  fs.writeFileSync(contactsFile, JSON.stringify(contacts, null, 2));
-
-  res.json({ message: "Message saved successfully" });
 };
