@@ -1,29 +1,30 @@
-const fs = require("fs");
-const path = require("path");
+const Subscription = require("../models/Subscription");
 
-const subsFile = path.join(__dirname, "..", "data", "subscriptions.json");
+exports.subscribeArtist = async (req, res, next) => {
+  try {
+    const { payment } = req.body;
 
-exports.subscribeArtist = (req, res) => {
+    const userId = req.user.id;   // from JWT
+    const email = req.user.email;
 
-  const { fullname, email, payment } = req.body;
+    const existing = await Subscription.findOne({ email });
 
-  const newUser = {
-    fullname,
-    email,
-    payment,
-    date: new Date()
-  };
+    if (existing) {
+      return res.json({ message: "Already subscribed" });
+    }
 
-  let data = [];
+    const newSub = await Subscription.create({
+      userId,
+      email,
+      payment
+    });
 
-  if (fs.existsSync(subsFile)) {
-    const fileData = fs.readFileSync(subsFile);
-    data = JSON.parse(fileData);
+    res.json({
+      success: true,
+      data: newSub
+    });
+
+  } catch (err) {
+    next(err);
   }
-
-  data.push(newUser);
-
-  fs.writeFileSync(subsFile, JSON.stringify(data, null, 2));
-
-  res.json({ success: true });
 };
