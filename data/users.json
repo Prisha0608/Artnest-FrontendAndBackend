@@ -34,17 +34,5 @@
     "fullname": "Prisha",
     "bio": "hello",
     "social": "http://vansh.com"
-  },
-  {
-    "username": "Maninder Singh",
-    "contact": "mani@gmail.com",
-    "password": "Lol@1234",
-    "role": "artist"
-  },
-  {
-    "username": "Selya",
-    "contact": "selyasharma5@gmail.com",
-    "password": "None@1234",
-    "role": "customer"
   }
 ]

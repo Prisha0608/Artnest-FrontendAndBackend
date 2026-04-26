@@ -16,7 +16,11 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.3",
+=======
+    "moongoose": "^0.0.5",
+>>>>>>> 514291e6c134079c01cfcd8041ddd68b0375cd2a
     "multer": "^2.1.1"
   }
 }

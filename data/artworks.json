@@ -19,6 +19,7 @@
     "title": "Screenshot 2026-03-07 163733.png",
     "price": "4000",
     "image": "/uploads/1772963472321.png"
+<<<<<<< HEAD
   },
   {
     "id": 1772991406270,
@@ -33,5 +34,7 @@
     "title": "i.jpg",
     "price": "3868",
     "image": "/uploads/1777193212518.jpg"
+=======
+>>>>>>> 514291e6c134079c01cfcd8041ddd68b0375cd2a
   }
 ]
