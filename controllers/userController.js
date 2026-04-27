@@ -4,21 +4,24 @@ const jwt = require("jsonwebtoken");
 
 exports.getUser = async (req, res) => {
   try {
-    // Logged-in user profile (from JWT)
-   
+    // CASE 1: signup check (no token)
+    if (req.query.username) {
+      const user = await User.find({ username: req.query.username });
+      return res.json(user);
+    }
+
+    // CASE 2: protected profile (token required)
     if (req.user) {
-        const user = await User.findById(req.user.id).select("-password");
+      const user = await User.findById(req.user.id).select("-password");
 
       if (!user) {
-        return res.status(404).json({
-          message: "User not found"
-        });
+        return res.status(404).json({ message: "User not found" });
       }
 
-      return res.status(200).json({
-        user
-      });
+      return res.json({ user });
     }
+
+    return res.status(400).json({ message: "Invalid request" });
 
   } catch (error) {
     res.status(500).json({
