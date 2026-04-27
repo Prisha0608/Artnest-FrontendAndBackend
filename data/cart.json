@@ -1,13 +1,14 @@
-<<<<<<< HEAD
-[]
-=======
+
+
 [
   {
-<<<<<<< HEAD
+
     "name": "Night Ball",
     "price": 4800,
     "img": "painting4.jpeg"
-=======
+  },
+
+{
     "name": "Hold",
     "price": 1800,
     "img": "sculpture2.jpeg"
@@ -46,7 +47,7 @@
     "name": "Night Ball",
     "price": 4800,
     "img": "painting4.jpeg"
->>>>>>> 283ff0606d84c6359c6bce0ee23a5a3e2a7cbc3f
+
   }
 ]
->>>>>>> 514291e6c134079c01cfcd8041ddd68b0375cd2a
+
