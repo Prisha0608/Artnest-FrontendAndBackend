@@ -2,10 +2,25 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dns = require("node:dns");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 require("dotenv").config({ path: "./.env" });
 console.log("ENV:", process.env.MONGO_URI);
 const connectDB = require("./database/dbconnection");
+
+app.use(cookieParser());
+
+app.use(session({
+  secret: "secret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 5
+  }
+}));
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -22,8 +37,6 @@ const errorHandler = require("./middleware/errorHandler");
 // Optional DNS fix
 dns.setServers(["1.1.1.1", "1.0.0.1"]);
 
-const app = express();
-const PORT = process.env.PORT || 3000;
 
 
 // Middlewares (GLOBAL)

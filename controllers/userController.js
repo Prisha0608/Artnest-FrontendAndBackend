@@ -65,7 +65,6 @@ exports.loginUser = async (req, res) => {
   try {
     const { login, password } = req.body;
 
-    // find user by username OR contact
     const user = await User.findOne({
       $or: [{ username: login }, { contact: login }]
     });
@@ -80,6 +79,14 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    // ✅ ADD THIS (SESSION CREATE)
+    req.session.user = {
+      id: user._id,
+      username: user.username,
+      role: user.role
+    };
+
+    // (JWT can stay — optional)
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -88,10 +95,7 @@ exports.loginUser = async (req, res) => {
 
     res.json({
       token,
-      user: {
-        username: user.username,
-        role: user.role
-      }
+      user: req.session.user
     });
 
   } catch (err) {
@@ -99,6 +103,7 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ message: "Something went wrong on server" });
   }
 };
+
 
 exports.updateProfile = async (req, res) => {
   try {
