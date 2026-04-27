@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtNest</title>
+  <link rel="stylesheet" href="/g.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 400px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      flex-wrap: nowrap;
+    }
+
+    .art-card {
+      min-width: 25%;
+      box-sizing: border-box;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .art-card img {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+
+    .art-label {
+      margin-top: 10px;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <h1><i class="fas fa-palette"></i> ArtNest</h1> <input type="checkbox" id="menu-toggle"> <label for="menu-toggle"
+      class="menu-icon"><i class="fas fa-bars"></i></label>
+    <ul class="menu">
+      <li><a href="/t.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="/gallery.html"><i class="fa-solid fa-images"></i> Gallery</a></li>
+      <li><a href="/letstalk.html"><i class="fas fa-envelope"></i> Contact</a></li>
+    </ul>
+  </nav>
+  <section class="hero" id="home"> <svg class="circle circle-hero-yellow" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="110" fill="#F2C14E" opacity="0.15" />
+    </svg> <svg class="circle circle-hero-green" viewBox="0 0 250 250">
+      <circle cx="125" cy="125" r="125" fill="#214436" opacity="0.08" />
+    </svg>
+
+    <h2 style="text-align:center; color:#214436;">
+  <%= greeting %>
+</h2>
+    <div class="hero-text">
+      <h1>Discover the World’s <span>Hidden Art</span></h1>
+      <p>Explore masterpieces, connect with artists, and own unique artwork that speaks to you.</p>
+      <div class="hero-buttons"> <a href="/login.html" class="btn artist-btn">Login</a> <a href="/signup.html"
+          class="btn customer-btn">Signup</a> </div>
+    </div>
+    <div class="hero-images"> <img
+        src="/indian.jpeg"
+        alt="Artwork 1"> <img
+        src="/kk.jpeg"
+        alt="Artwork 2"> <img
+        src="/african.jpeg"
+        alt="Artwork 3"> </div>
+  </section>
+  <section class="about-section"> <svg class="circle circle-about-yellow" viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="70" fill="#F2C14E" opacity="0.15" />
+    </svg> <svg class="circle circle-about-green" viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="90" fill="#214436" opacity="0.08" />
+    </svg>
+    <div class="about-container">
+      <div class="about-images">
+        <div class="main-image"> <img
+            src="/6.jpeg"
+            alt="art1"> </div>
+      </div>
+      <div class="about-content">
+        <h2>About Us</h2>
+        <p> "At ArtNest, we believe art is for everyone. Our platform connects passionate artists with people who love
+          and value creativity. We provide a space where artists can showcase their work, gain recognition, and reach a
+          wider audience. Our goal is to build a vibrant community that celebrates creativity, supports talent, and
+          makes art more accessible to all." </p> <a href="/about.html" class="about-btn">Explore More</a>
+      </div>
+    </div>
+  </section>
+  <section class="featured-artworks"> <svg class="circle circle-featured-yellow" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="60" fill="none" stroke="#F2C14E" stroke-width="3" opacity="0.1" />
+    </svg> <svg class="circle circle-featured-green" viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="90" fill="#214436" opacity="0.06" />
+    </svg>
+    <h2>Featured Artworks</h2>
+    <p>"A handpicked gallery of unique creations from our talented artists"</p>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="art-card"><img src="/Glass City.jpeg" alt="Street Photography">
+          <div class="art-label">Street Photography</div>
+        </div>
+        <div class="art-card"><img src="/tg.jpeg" alt="Abstract">
+          <div class="art-label">Abstract</div>
+        </div>
+        <div class="art-card"><img src="/re.jpeg" alt="Sculpture">
+          <div class="art-label">Sculpture</div>
+        </div>
+        <div class="art-card"><img src="/Rengoku Kyojuro 4k wallpaper.jpeg" alt="Anime">
+          <div class="art-label">Anime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="offers"> <svg class="circle circle-offer-yellow" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="75" fill="#F2C14E" opacity="0.1" />
+    </svg> <svg class="circle circle-offer-green" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="100" fill="#214436" opacity="0.05" />
+    </svg>
+    <h2>What We Offer</h2>
+    <p>"A creative space that connects artists showcasing their talent with customers seeking unique and original
+      artworks."</p>
+    <div class="offer-container">
+      <div class="offer-card">
+        <h3><i class="fa-solid fa-paintbrush"></i> For Artist</h3>
+        <p> "We provide artists with a dedicated space to showcase their creativity and connect with a wider audience.
+          From building a personalized profile to displaying a diverse portfolio, artists can share their unique style
+          and story. Our platform makes it simple to sell artworks directly to interested buyers, gain visibility
+          through featured listings, and explore collaboration opportunities within a supportive community of fellow
+          creators." </p> <button class="subscribe-btn" id="openPopup">Subscribe</button>
+      </div>
+      <div class="offer-card">
+        <h3><i class="fa-solid fa-users"></i> For Customers</h3>
+        <p> "For customers, we offer an easy and inspiring way to discover and own original art. Whether you’re looking
+          for a statement piece, a thoughtful gift, or a custom commission, our platform connects you directly with
+          talented artists. With secure transactions and a wide range of styles, sizes, and budgets, finding the perfect
+          artwork becomes a seamless experience while also supporting the journey of emerging and established creators."
+        </p>
+      </div>
+    </div>
+    <div id="subscriptionPopup" class="popup">
+      <div class="popup-content"> <span class="close-btn" id="closePopup">&times;</span>
+        <h2>Choose Your Plan</h2>
+        <div class="plans">
+          <div class="plan-card">
+            <h3>Basic</h3>
+            <p>₹199/month</p>
+            <ul>
+              <li>Upload up to 10 artworks</li>
+              <li>Standard visibility</li>
+              <li>Email support</li>
+            </ul> <button class="plan-btn" onclick="goToPlan('basic')">Select</button>
+          </div>
+          <div class="plan-card popular">
+            <h3>Pro</h3>
+            <p>₹499/month</p>
+            <ul>
+              <li>Unlimited uploads</li>
+              <li>Featured listings</li>
+              <li>Priority support</li>
+            </ul> <button class="plan-btn" onclick="goToPlan('pro')">Select</button>
+          </div>
+          <div class="plan-card">
+            <h3>Premium</h3>
+            <p>₹899/month</p>
+            <ul>
+              <li>All Pro features</li>
+              <li>Homepage spotlight</li>
+              <li>Custom promotion</li>
+            </ul> <button class="plan-btn" onclick="goToPlan('premium')">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="quote"> <svg class="circle circle-quote-yellow" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="60" fill="none" stroke="#F2C14E" stroke-width="3" opacity="0.12" />
+    </svg> <svg class="circle circle-quote-fill" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="50" fill="#F2C14E" opacity="0.1" />
+    </svg>
+    <div class="quote-container">
+      <p class="quote-text">“Art is not what you see, but what you make others see.”</p>
+      <h4>- Edgar Degas</h4>
+    </div>
+  </section>
+  <section class="reviews"> <svg class="circle circle-reviews-yellow" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="50" fill="#F2C14E" opacity="0.1" />
+    </svg> <svg class="circle circle-reviews-green" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="75" fill="#214436" opacity="0.06" />
+    </svg>
+    <h2>What Our Users Say</h2>
+    <div class="review-grid">
+      <div class="review-card">
+        <p>""ArtNest helped me showcase my paintings to a global audience. I’ve connected with amazing art lovers!"</p>
+        <h4>- Priya Sharma</h4>
+      </div>
+      <div class="review-card">
+        <p>"I bought a beautiful abstract piece. The process was smooth and I felt confident supporting real artists."
+        </p>
+        <h4>- Rahul Verma</h4>
+      </div>
+      <div class="review-card">
+        <p>"inally a platform where art meets technology. Simple, creative, and impactful."</p>
+        <h4>- Ananya Gupta</h4>
+      </div>
+    </div>
+  </section>
+  <section class="interlude">
+    <div class="interlude-content">
+      <h2>Stay Inspired!</h2>
+      <p>Discover the latest artworks and offers from our creative community.</p> <a href="/Gallery.html"
+        class="cta-btn">Explore Gallery</a>
+    </div> <svg class="circle shape1" viewBox="0 0 150 150">
+      <circle cx="75" cy="75" r="75" fill="#F2C14E" opacity="0.12" />
+    </svg> <svg class="circle shape2" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="50" fill="#214436" opacity="0.12" />
+    </svg> <svg class="circle shape3" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="40" fill="#F2C14E" opacity="0.12" />
+    </svg>
+  </section>
+  <section class="contact"> <svg class="circle circle-contact-yellow" viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="70" fill="none" stroke="#F2C14E" stroke-width="3" opacity="0.12" />
+    </svg> <svg class="circle circle-contact-green" viewBox="0 0 180 180">
+      <circle cx="90" cy="90" r="90" fill="#214436" opacity="0.06" />
+    </svg>
+    <div class="contact-container">
+      <div class="contact-text">
+        <h2>Contact Us</h2>
+        <p>"We’d love to hear from you—reach out with any questions, ideas, or collaborations."</p>
+      </div>
+      <div class="contact-info">
+        <div class="info-item"><i class="fas fa-phone-alt"></i>
+          <div>
+            <h4>Phone</h4>
+            <p>+91 12345 00000</p>
+          </div>
+        </div>
+        <div class="info-item"><i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <p>info@artnest.com</p>
+          </div>
+        </div>
+      </div>
+    </div> <a href="/letstalk.html" class="contact-btn">Contact Us</a>
+  </section>
+  <footer class="footer"> <svg class="circle circle-footer-pattern" viewBox="0 0 160 160">
+      <circle cx="80" cy="80" r="80" fill="#f2c14e" opacity="0.08" />
+    </svg>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h2 class="logo">ArtNest</h2>
+        <p>We are providing high-quality artworks and a platform for artists and art lovers to connect.</p>
+        <div class="socials"> <a href="#"><i class="facebook"></i></a> <a href="#"><i class="twitter"></i></a> <a
+            href="#"><i class="instagram"></i></a> </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="/Gallery.html">Gallery</a></li>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/letstalk.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <p><i class="phone"></i> +91 12345 67890</p>
+        <p><i class="envelope"></i> contact@artnest.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ArtNest. All Rights Reserved.</p>
+    </div>
+  </footer>
+  <script> const openPopup = document.getElementById('openPopup'); const popup = document.getElementById('subscriptionPopup'); const closePopup = document.getElementById('closePopup'); openPopup.addEventListener('click', () => { popup.style.display = 'flex'; }); closePopup.addEventListener('click', () => { popup.style.display = 'none'; }); window.addEventListener('click', (e) => { if (e.target === popup) { popup.style.display = 'none'; } }); // Redirect user to the artist subscription page with URL parameter 
+    function goToPlan(plan) {
+      window.location.href = `/artist-subscription.html?plan=${plan}`;
+    }
+
+  </script>
+</body>
+
+</html>
