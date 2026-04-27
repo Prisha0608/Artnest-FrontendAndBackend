@@ -44,7 +44,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/users", userRoutes);
 app.use("/artworks", artworkRoutes);
 app.use("/cart", cartRoutes);
-app.use("/products", productRoutes);
+app.use("/product", productRoutes);
 app.use("/contacts", contactRoutes);
 app.use("/subscribe", subscriptionRoutes);
 

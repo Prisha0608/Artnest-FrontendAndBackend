@@ -1,112 +1,106 @@
 // ================= DOM READY =================//
 
 document.addEventListener("DOMContentLoaded", () => {
-   loadProducts()
-   initSliders()
-})
+   loadProducts();
+   initSliders();
+});
 
 
 // ================= LOAD PRODUCTS =================//
 
 function loadProducts() {
 
-    fetch("/products")
-
+   fetch("http://localhost:3000/product")
    .then(res => {
-      if (!res.ok) throw new Error("Product JSON not found")
-      return res.json()
+      if (!res.ok) throw new Error("Products not found");
+      return res.json();
    })
-
    .then(data => {
 
-      displayTrending(data.trending)
-      displayCategory("paintings", data.paintings)
-      displayCategory("abstract", data.abstract)
-      displayCategory("portrait", data.portrait)
-      displayCategory("sculpture", data.sculpture)
-      displayCategory("resin", data.resin)
-      displayCategory("crochet", data.crochet)
+      displayTrending(data);
 
-      initSliders();
-   })
+      displayCategory("paintings", data);
+      displayCategory("abstract", data);
+      displayCategory("portrait", data);
+      displayCategory("sculpture", data);
+      displayCategory("resin", data);
+      displayCategory("crochet", data);
 
-   .catch(err => {
-      console.log("Product load error:", err)
    })
+   .catch(err => console.log(err));
 }
 
 
-//================= TRENDING =================//
+// ================= TRENDING =================//
 
-function displayTrending(products){
+function displayTrending(allProducts){
 
-   const container = document.getElementById("trending")
-   if(!container || !products) return
+   const container = document.getElementById("trending");
+   if(!container) return;
 
-   container.innerHTML = ""
+   container.innerHTML = "";
+
+   const products = allProducts
+      .filter(p => p.category === "trending")
+      .slice(0, 4);
 
    products.forEach(product => {
 
-      const card = document.createElement("div")
-      card.className = "trending-card"
+      const card = document.createElement("div");
+      card.className = "trending-card";
 
       card.innerHTML = `
-         <img src="/${product.image}" alt="${product.name}">
+         <img src="http://localhost:3000/${product.img}" alt="${product.name}">
          <h3>${product.name}</h3>
          <p class="price">₹${product.price}</p>
-         <button class="cart-btn" onclick="event.stopPropagation(); return false;">
-Add to Cart
-</button>
-      `
+         <button class="cart-btn">Add to Cart</button>
+      `;
 
-      card.querySelector("button").addEventListener("click", function(event){
-    event.preventDefault();
-    addToCart(product);
-})
+      card.querySelector("button").addEventListener("click", () => {
+         addToCart(product);
+      });
 
-      container.appendChild(card)
-
-   })
+      container.appendChild(card);
+   });
 }
 
 
-//================= CATEGORY =================//
+// ================= CATEGORY =================//
 
-function displayCategory(id, products){
+function displayCategory(category, allProducts){
 
-   const container = document.getElementById(id)
-   if(!container || !products) return
+   const container = document.getElementById(category);
+   if(!container) return;
 
-   container.innerHTML = ""
+   container.innerHTML = "";
+
+   const products = allProducts.filter(p => p.category === category);
 
    products.forEach(product => {
 
-      const slide = document.createElement("div")
-      slide.className = "slide"
+      const slide = document.createElement("div");
+      slide.className = "slide";
 
       slide.innerHTML = `
-         <img src="/${product.image}" alt="${product.name}">
+         <img src="http://localhost:3000/${product.img}" alt="${product.name}">
          <h4>${product.name}</h4>
          <p>₹${product.price}</p>
-         <button class="cart-btn" onclick="event.stopPropagation(); return false;">
-Add to Cart
-</button>
-      `
+         <button class="cart-btn">Add to Cart</button>
+      `;
 
-      slide.querySelector("button").addEventListener("click", function(event){
-    event.preventDefault();      // stop default
-    addToCart(product);          // call function normally
-})
+      slide.querySelector("button").addEventListener("click", () => {
+         addToCart(product);
+      });
 
-      container.appendChild(slide)
-
-   })
+      container.appendChild(slide);
+   });
 }
 
 
-// ================= ADD TO CART ================= //
+// ================= ADD TO CART =================//
 
 function addToCart(product) {
+
     fetch("http://localhost:3000/cart/add-to-cart", {
         method: "POST",
         headers: {
@@ -115,71 +109,50 @@ function addToCart(product) {
         body: JSON.stringify({
             name: product.name,
             price: product.price,
-            img: product.image
+            img: product.img
         })
     })
     .then(res => res.json())
-    .then(data => {
-        // No alert, no cart count update
-        console.log("✅ Item added successfully")
-        alert("Item added successfully");
-    })
-    .catch(err => {
-        console.log("❌ Failed to add item:", err)
-    })
+    .then(() => alert("Item added successfully"))
+    .catch(err => console.log(err));
 }
 
-// ================= SLIDER ================= //
+
+// ================= SLIDERS =================//
 
 function initSliders(){
 
    document.querySelectorAll(".slider").forEach(slider => {
 
-      const track = slider.querySelector(".slider-track")
-      const prev = slider.querySelector(".prev")
-      const next = slider.querySelector(".next")
+      const track = slider.querySelector(".slider-track");
+      const prev = slider.querySelector(".prev");
+      const next = slider.querySelector(".next");
 
-      if(!track) return
+      if(!track) return;
 
-      const scrollAmount = () => {
-         return track.firstElementChild
+      const scrollAmount = () =>
+         track.firstElementChild
             ? track.firstElementChild.offsetWidth + 16
-            : 250
-      }
+            : 250;
 
       next?.addEventListener("click", () => {
-         track.scrollBy({
-            left: scrollAmount(),
-            behavior: "smooth"
-         })
-      })
+         track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+      });
 
       prev?.addEventListener("click", () => {
-         track.scrollBy({
-            left: -scrollAmount(),
-            behavior: "smooth"
-         })
-      })
+         track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+      });
 
-   })
-
+   });
 }
 
 
-// ================= NAV MENU TOGGLE ================= //
+// ================= NAV =================//
 
 function toggleMenu(){
-
-   document.getElementById("menu")
-   .classList.toggle("active")
-
+   document.getElementById("menu").classList.toggle("active");
 }
-
-
-// ================= GO TO CART ================= //
 
 function goToCart(){
-   window.location.href = "cart.html"
+   window.location.href = "cart.html";
 }
-
-
