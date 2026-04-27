@@ -17,6 +17,7 @@ form.addEventListener("submit", async (e) => {
       headers: {
         "Content-Type": "application/json"
       },
+      credentials: "include", // ⭐ MOST IMPORTANT
       body: JSON.stringify({
         login: loginInput,
         password: password
@@ -30,14 +31,9 @@ form.addEventListener("submit", async (e) => {
       return;
     }
 
-    // ✅ SAVE JWT TOKEN (IMPORTANT for protected routes)
-    localStorage.setItem("token", data.token);
+    console.log("Login success:", data);
 
-    // ✅ SAVE USER INFO
-    localStorage.setItem("loggedInUser", data.user.username);
-    localStorage.setItem("role", data.user.role);
-
-    // redirect based on role
+    // ✅ redirect (session already active)
     if (data.user.role === "artist") {
       window.location.href = "artist.html";
     } else {
