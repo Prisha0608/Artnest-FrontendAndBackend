@@ -4,21 +4,28 @@ const jwt = require("jsonwebtoken");
 
 exports.getUser = async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: "Unauthorized" });
+    // CASE 1: signup check (no token)
+    if (req.query.username) {
+      const user = await User.find({ username: req.query.username });
+      return res.json(user);
     }
 
-    const user = await User.findById(req.user.id).select("-password");
+    // CASE 2: protected profile (token required)
+    if (req.user) {
+      const user = await User.findById(req.user.id).select("-password");
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      return res.json({ user });
     }
 
-    res.status(200).json({ user });
+    return res.status(400).json({ message: "Invalid request" });
 
   } catch (error) {
     res.status(500).json({
-      message: "Error fetching user",
+      message: "Error fetching user(s)",
       error: error.message
     });
   }
