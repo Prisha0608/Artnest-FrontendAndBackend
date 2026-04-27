@@ -4,144 +4,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artist Dashboard</title>
-
-  <!-- Google Fonts -->
+  <title>Artist Dashboard</title> <!-- Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@600&display=swap"
-    rel="stylesheet">
-
-  <!-- Font Awesome -->
+    rel="stylesheet"> <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <!-- External CSS -->
   <link rel="stylesheet" href="artist.css">
-
 </head>
 
-<body>
-  <!-- Navbar -->
+<body> <!-- Navbar -->
   <nav>
-    <h1><i class="fas fa-palette"></i> ArtNest</h1>
-
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
-
+    <h1><i class="fas fa-palette"></i> ArtNest</h1> <input type="checkbox" id="menu-toggle"> <label for="menu-toggle"
+      class="menu-icon"><i class="fas fa-bars"></i></label>
     <ul class="menu">
       <li><a href="t.html"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
       <li><a href="Gallery.html"><i class="fa-solid fa-images"></i> Gallery</a></li>
       <li><a href="letstalk.html"><i class="fas fa-envelope"></i> Contact</a></li>
     </ul>
-  </nav>
-
-  <!-- Welcome -->
+  </nav> <!-- Welcome -->
   <div class="welcome_card">
     <div class="shapes"></div>
     <div class="welcome">
       <h2 id="welcomeText">Welcome, Artist!</h2>
-      <p>Showcase your creativity, upload your artwork, and connect with the world.</p>
-      <a href="Gallery.html" class="btn" style="text-decoration:none ;"><i class="fas fa-images"></i> Explore
-        Gallery</a>
+      <p>Showcase your creativity, upload your artwork, and connect with the world.</p> <a href="Gallery.html"
+        class="btn" style="text-decoration:none ;"><i class="fas fa-images"></i> Explore Gallery</a>
     </div>
-  </div>
-
-  <!-- Features Section -->
+  </div> <!-- Features Section -->
   <section class="features">
     <h2>Our Features</h2>
-    <div class="cards">
-      <!-- Upload Artwork -->
+    <div class="cards"> <!-- Upload Artwork -->
       <div class="card">
         <div class="icon"><i class="fas fa-paint-brush"></i></div>
         <h3>Upload Artwork</h3>
-        <p>Easily upload and manage your creations with just a few clicks.</p>
-        <button id="openUploadModal">Upload New Artwork</button>
-      </div>
-      <!-- Upload Modal -->
+        <p>Easily upload and manage your creations with just a few clicks.</p> <button id="openUploadModal">Upload New
+          Artwork</button>
+      </div> <!-- Upload Modal -->
       <div id="uploadModal" class="modal">
-        <div class="modal-content">
-          <span class="close-upload">&times;</span>
+        <div class="modal-content"> <span class="close-upload">&times;</span>
           <h2>Upload Artwork</h2>
-
-          <form id="uploadForm">
-            <label>Select Artwork</label>
-            <input type="file" id="artFile" accept="image/*" required />
-
-            <label>Set Price (₹)</label>
-            <input type="number" id="artPrice" min="1" required />
-
-            <button type="submit">Upload</button>
-          </form>
+          <form id="uploadForm"> <label>Select Artwork</label> <input type="file" id="artFile" accept="image/*"
+              required /> <label>Set Price (₹)</label> <input type="number" id="artPrice" min="1" required /> <button
+              type="submit">Upload</button> </form>
         </div>
-      </div>
-      <!-- Profile -->
+      </div> <!-- Profile -->
       <div class="card">
         <div class="icon"><i class="fas fa-user"></i></div>
         <h3>Profile</h3>
-        <p>Update your bio, add social links, and let people know more about you.</p>
-        <button id="profileModal">Edit Profile</button>
-        <!-- <a href="" class="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</a> -->
+        <p>Update your bio, add social links, and let people know more about you.</p> <button id="profileModal">Edit
+          Profile</button> <!-- <a href="" class="edit-profile-btn"><i class="fas fa-edit"></i> Edit Profile</a> -->
       </div>
     </div>
-  </section>
-  <!-- Edit Profile Popup Modal -->
+  </section> <!-- Edit Profile Popup Modal -->
   <div id="editProfileModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
+    <div class="modal-content"> <span class="close">&times;</span>
       <h2>Edit Profile</h2>
-      <form id="editProfileForm">
+      <form id="editProfileForm"> 
         <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your name" required />
-
-        <label for="bio">Bio</label>
-        <textarea id="bio" rows="3" placeholder="Write a short bio"></textarea>
-
-        <label for="social">Social Link</label>
-        <input type="url" id="social" placeholder="https://yourprofile.com" />
-
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" />
-
-        <button type="submit">Save Changes</button>
-      </form>
+         <input type="text" id="name"
+          placeholder="Enter your name" required />
+           <label for="bio">Bio</label>
+            <textarea id="bio" rows="3" placeholder="Write a short bio"></textarea>
+             <label for="social">Social Link</label> 
+             <input type="url"  id="social" placeholder="https://yourprofile.com" /> 
+             <label for="emailId">Email</label> 
+             <input type="email"  id="emailId" placeholder="Enter your email" /> <button type="submit">Save Changes</button> </form>
     </div>
-  </div>
-
-  <!-- Extra Section -->
+  </div> <!-- Extra Section -->
   <section class="extra">
     <h2>Featured Artists</h2>
     <p>Discover and connect with talented creators from around the globe.</p>
     <div class="artist-grid">
-      <div class="artist-card">
-        <img src="artist1.webp" alt="Artist 1">
+      <div class="artist-card"> <img src="artist1.webp" alt="Artist 1">
         <p>Ambika Wahi</p>
       </div>
-      <div class="artist-card">
-        <img src="artist2.webp" alt="Artist 2">
+      <div class="artist-card"> <img src="artist2.webp" alt="Artist 2">
         <p>Aditya Ponkshe</p>
       </div>
-      <div class="artist-card">
-        <img src="artist3.webp" alt="Artist 3">
+      <div class="artist-card"> <img src="artist3.webp" alt="Artist 3">
         <p>Anuj Malhotra</p>
       </div>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <svg class="circle circle-footer-pattern" viewBox="0 0 160 160">
+  </section> <!-- Footer -->
+  <footer class="footer"> <svg class="circle circle-footer-pattern" viewBox="0 0 160 160">
       <circle cx="80" cy="80" r="80" fill="#f2c14e" opacity="0.08" />
     </svg>
-
     <div class="footer-container">
       <div class="footer-col">
         <h2 class="logo">ArtNest</h2>
         <p>We are providing high-quality artworks and a platform for artists and art lovers to connect.</p>
-        <div class="socials">
-          <a href="#"><i class="facebook"></i></a>
-          <a href="#"><i class="twitter"></i></a>
-          <a href="#"><i class="instagram"></i></a>
-        </div>
+        <div class="socials"> <a href="#"><i class="facebook"></i></a> <a href="#"><i class="twitter"></i></a> <a
+            href="#"><i class="instagram"></i></a> </div>
       </div>
       <div class="footer-col">
         <h4>Quick Links</h4>
@@ -161,209 +115,208 @@
     <div class="footer-bottom">
       <p>&copy; 2025 ArtNest. All Rights Reserved.</p>
     </div>
-  </footer>
+  </footer> <!-- Toast container -->
+  <div id="toast" class="toast"></div> <!-- JavaScript -->
+  <script>
+    const BASE_URL = "http://localhost:3000";
+    let username = "";
 
-  <!-- Toast container -->
-  <div id="toast" class="toast"></div>
+    // Elements
+    const toast = document.getElementById("toast");
+    const welcomeText = document.getElementById("welcomeText");
 
-  <!-- JavaScript -->
- <script>
-// ===============================
-// LOGIN CHECK
-// ===============================
-const toast = document.getElementById("toast");
-const token = localStorage.getItem("token");
-const username = localStorage.getItem("loggedInUser");
-const welcomeText = document.getElementById("welcomeText");
+    const uploadModal = document.getElementById("uploadModal");
+    const openUploadBtn = document.getElementById("openUploadModal");
+    const closeUpload = document.querySelector(".close-upload");
 
-if (!username) {
-  alert("Please login first");
-  window.location.href = "login.html";
-}
+    const profileModal = document.getElementById("editProfileModal");
+    const openProfileBtn = document.getElementById("profileModal");
+    const closeProfile = document.querySelector(".close");
 
-welcomeText.textContent = `Welcome, ${username}!`;
+    // ==========================
+    // TOAST
+    // ==========================
+    function showToast(message, type = "success") {
+      toast.textContent = message;
+      toast.className = "toast show " + type;
 
-
-// ===============================
-// TOAST FUNCTION
-// ===============================
-
-function showToast(message, type = "success") {
-
-  toast.textContent = message;
-  toast.className = "toast " + type + " show";
-
-  setTimeout(() => {
-    toast.className = "toast";
-  }, 3000);
-}
-
-
-// ===============================
-// UPLOAD MODAL
-// ===============================
-const uploadModal = document.getElementById("uploadModal");
-const openUploadBtn = document.getElementById("openUploadModal");
-const closeUpload = document.querySelector(".close-upload");
-
-const uploadForm = document.getElementById("uploadForm");
-const artFile = document.getElementById("artFile");
-const artPrice = document.getElementById("artPrice");
-
-openUploadBtn.onclick = () => {
-  uploadModal.style.display = "flex";
-};
-
-closeUpload.onclick = () => {
-  uploadModal.style.display = "none";
-};
-
-
-// ===============================
-// UPLOAD ARTWORK
-// ===============================
-uploadForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  if (!artFile.files.length) {
-    showToast("Please select an artwork", "error");
-    return;
-  }
-
-  if (!artPrice.value || artPrice.value <= 0) {
-    showToast("Enter valid price", "error");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("artwork", artFile.files[0]);
-  formData.append("title", artFile.files[0].name);
-  formData.append("price", artPrice.value);
-  formData.append("username", username);
-
-
-  try {
-    const response = await fetch("http://localhost:3000/artworks/upload", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      body: formData
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      showToast("Artwork uploaded successfully");
-      uploadModal.style.display = "none";
-      uploadForm.reset();
-    } else {
-      showToast(result.message || "Upload failed", "error");
+      setTimeout(() => {
+        toast.className = "toast";
+      }, 3000);
     }
 
-  } catch (error) {
-    showToast("Server error", "error");
-  }
-});
+    // ==========================
+    // CHECK LOGIN
+    // ==========================
+    async function checkLogin() {
+      try {
+        const response = await fetch(`${BASE_URL}/users/profile-session`, {
+          method: "GET",
+          credentials: "include"
+        });
 
+        const result = await response.json();
 
-// ===============================
-// PROFILE MODAL
-// ===============================
-const profileModal = document.getElementById("editProfileModal");
-const openProfileBtn = document.getElementById("profileModal");
-const closeProfile = document.querySelector(".close");
+        if (!response.ok) {
+          window.location.href = "login.html";
+          return;
+        }
 
-openProfileBtn.addEventListener("click", async () => {
-  profileModal.style.display = "flex";
+        username = result.user.username;
+        welcomeText.textContent = `Welcome, ${username}!`;
 
-  try {
-    const response = await fetch("http://localhost:3000/users/userDetails", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`
+      } catch (error) {
+        window.location.href = "login.html";
       }
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      showToast(result.message || "Unable to load profile", "error");
-      return;
     }
 
-    const user = result.user;
+    checkLogin();
 
-    document.getElementById("name").value = user.fullname || "";
-    document.getElementById("bio").value = user.bio || "";
-    document.getElementById("social").value = user.social || "";
-    document.getElementById("email").value = user.contact || "";
-
-  } catch (error) {
-    showToast("Server error", "error");
-  }
-});
-
-closeProfile.onclick = () => {
-  profileModal.style.display = "none";
-};
-
-
-// ===============================
-// SAVE PROFILE
-// ===============================
-document
-  .getElementById("editProfileForm")
-  .addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    const newData = {
-      username: username,
-      fullname: document.getElementById("name").value.trim(),
-      bio: document.getElementById("bio").value.trim(),
-      social: document.getElementById("social").value.trim(),
-      email: document.getElementById("email").value.trim()
+    // ==========================
+    // UPLOAD MODAL
+    // ==========================
+    openUploadBtn.onclick = () => {
+      uploadModal.style.display = "flex";
     };
 
-    try {
-      const response = await fetch("http://localhost:3000/users/profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(newData)
-      });
+    closeUpload.onclick = () => {
+      uploadModal.style.display = "none";
+    };
 
-      const result = await response.json();
+    // ==========================
+    // PROFILE MODAL
+    // ==========================
+    openProfileBtn.onclick = async () => {
+      try {
+        const response = await fetch(
+          `${BASE_URL}/users/userDetails?username=${encodeURIComponent(username)}`,
+          {
+            method: "GET",
+            credentials: "include"
+          }
+        );
 
-      if (response.ok) {
-        showToast("Profile updated successfully");
-        profileModal.style.display = "none";
-      } else {
-        showToast(result.message || "Update failed", "error");
+        const result = await response.json();
+
+        if (!response.ok) {
+          showToast(result.message || "Unable to load profile", "error");
+          return;
+        }
+
+        const user = result[0];
+
+        if (!user) {
+          showToast("User not found", "error");
+          return;
+        }
+
+        document.getElementById("name").value = user.fullname || "";
+        document.getElementById("bio").value = user.bio || "";
+        document.getElementById("social").value = user.social || "";
+        document.getElementById("emailId").value = user.contact || "";
+
+        profileModal.style.display = "flex";
+
+      } catch (error) {
+        showToast("Server error", "error");
+      }
+    };
+
+    closeProfile.onclick = () => {
+      profileModal.style.display = "none";
+    };
+
+    // ==========================
+    // UPLOAD ARTWORK
+    // ==========================
+    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const artFile = document.getElementById("artFile");
+      const artPrice = document.getElementById("artPrice");
+
+      if (!artFile.files.length) {
+        showToast("Select artwork", "error");
+        return;
       }
 
-    } catch (error) {
-      showToast("Server error", "error");
-    }
-  });
+      const formData = new FormData();
+      formData.append("artwork", artFile.files[0]);
+      formData.append("title", artFile.files[0].name);
+      formData.append("price", artPrice.value);
 
+      try {
+        const response = await fetch(`${BASE_URL}/artworks/upload`, {
+          method: "POST",
+          credentials: "include",
+          body: formData
+        });
 
-// ===============================
-// CLOSE MODALS ON OUTSIDE CLICK
-// ===============================
-window.onclick = function (event) {
-  if (event.target === uploadModal) {
-    uploadModal.style.display = "none";
-  }
+        const result = await response.json();
 
-  if (event.target === profileModal) {
-    profileModal.style.display = "none";
-  }
-};
-</script>
+        if (response.ok) {
+          showToast("Artwork uploaded successfully");
+          document.getElementById("uploadForm").reset();
+          uploadModal.style.display = "none";
+        } else {
+          showToast(result.message || "Upload failed", "error");
+        }
+
+      } catch (error) {
+        showToast("Server error", "error");
+      }
+    });
+
+    // ==========================
+    // SAVE PROFILE
+    // ==========================
+    document.getElementById("editProfileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        fullname: document.getElementById("name").value.trim(),
+        bio: document.getElementById("bio").value.trim(),
+        social: document.getElementById("social").value.trim(),
+        contact: document.getElementById("emailId").value.trim()
+      };
+
+      try {
+        const response = await fetch(`${BASE_URL}/users/profile`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          showToast("Profile updated successfully");
+          profileModal.style.display = "none";
+        } else {
+          showToast(result.message || "Update failed", "error");
+        }
+
+      } catch (error) {
+        showToast("Server error", "error");
+      }
+    });
+
+    // ==========================
+    // CLOSE MODAL ON OUTSIDE CLICK
+    // ==========================
+    window.onclick = (event) => {
+      if (event.target === uploadModal) {
+        uploadModal.style.display = "none";
+      }
+
+      if (event.target === profileModal) {
+        profileModal.style.display = "none";
+      }
+    };
+  </script>
 </body>
 
 </html>

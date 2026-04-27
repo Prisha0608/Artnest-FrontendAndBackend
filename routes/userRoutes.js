@@ -7,6 +7,6 @@ router.get("/profile-session", sessionAuth, userController.getSessionUser);
 router.get("/userDetails", userController.getUser);
 router.post("/signup", userController.registerUser);
 router.post("/login", userController.loginUser);
-router.post("/profile", authMiddleware, userController.updateProfile);
+router.post("/profile", sessionAuth, userController.updateProfile);
 
 module.exports = router;

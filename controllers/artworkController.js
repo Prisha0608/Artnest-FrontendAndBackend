@@ -1,31 +1,42 @@
+// controllers/artworkController.js
+
 const Artwork = require("../models/Artwork");
 
+// ==================================
+// POST /artworks/upload
+// ==================================
 exports.uploadArtwork = async (req, res) => {
   try {
-  
-    const username =  req.body.username;
+    if (!req.session.user) {
+      return res.status(401).json({
+        message: "Please login first"
+      });
+    }
 
     const { title, price } = req.body;
 
-    // validation (important for evaluation)
     if (!title || !price) {
-      return res.status(400).json({ message: "Title and price required" });
+      return res.status(400).json({
+        message: "Title and price required"
+      });
     }
 
     if (!req.file) {
-      return res.status(400).json({ message: "No image uploaded" });
+      return res.status(400).json({
+        message: "No image uploaded"
+      });
     }
 
-    // MongoDB create
     const artwork = await Artwork.create({
-      username,
-      title,
+      username: req.session.user.username,
+      userId: req.session.user.id,
+      title: title.trim(),
       price: Number(price),
       image: `/uploads/${req.file.filename}`
     });
 
     res.status(201).json({
-      message: "Artwork uploaded successfully!",
+      message: "Artwork uploaded successfully",
       artwork
     });
 

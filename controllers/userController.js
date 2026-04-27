@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 exports.getSessionUser = async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id).select("-password");
-
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -36,7 +35,6 @@ exports.getUser = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
       return res.json({ user });
     }
 
@@ -126,30 +124,42 @@ exports.loginUser = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { username, fullname, bio, social, email } = req.body;
-    console.log("Updating profile for:", req.body);
-    // Find user by username and update fields
-    const updatedUser = await User.findOneAndUpdate(
-      { username: username },
-      {
-        fullname: fullname,
-        bio: bio,
-        social: social,
-        contact: email
-      },
-      { new: true } // return updated document
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+    // session check
+    if (!req.session.user) {
+      return res.status(401).json({
+        message: "Please login first"
+      });
     }
 
-    res.json({
-      message: "Profile updated",
+    const { fullname, bio, social, contact } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.session.user.id,
+      {
+        fullname: fullname?.trim() || "",
+        bio: bio?.trim() || "",
+        social: social?.trim() || "",
+        contact: contact?.trim() || ""
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully",
       user: updatedUser
     });
 
   } catch (error) {
+    console.log("Profile Update Error:", error);
+
     res.status(500).json({
       message: "Error updating profile",
       error: error.message
