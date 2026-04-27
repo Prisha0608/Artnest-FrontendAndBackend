@@ -37,9 +37,21 @@ exports.clearCart = async (req, res, next) => {
 };
 
 // Remove item
+const mongoose = require("mongoose"); // add at top
+
 exports.removeFromCart = async (req, res, next) => {
   try {
-    await Cart.findByIdAndDelete(req.params.id);
+    const id = req.params.id;
+
+    // ✅ check valid MongoDB ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        error: "Invalid ID"
+      });
+    }
+
+    await Cart.findByIdAndDelete(id);
+
     res.json({ success: true });
   } catch (err) {
     next(err);
