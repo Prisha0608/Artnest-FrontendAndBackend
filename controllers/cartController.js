@@ -1,73 +1,47 @@
-const fs = require("fs");
-const path = require("path");
-
-const cartFile = path.join(__dirname, "..", "data", "cart.json");
+const Cart = require("../models/Cart");
 
 // Add item
-exports.addToCart = (req, res) => {
+exports.addToCart = async (req, res, next) => {
+  try {
+    const item = await Cart.create(req.body);
+    const count = await Cart.countDocuments();
 
-  const { name, price, img } = req.body;
-
-  let cart = [];
-
-  if (fs.existsSync(cartFile)) {
-    try {
-      cart = JSON.parse(fs.readFileSync(cartFile, "utf-8"));
-    } catch {
-      cart = [];
-    }
+    res.json({
+      success: true,
+      cartLength: count,
+      item
+    });
+  } catch (err) {
+    next(err);
   }
-
-  cart.push({ name, price, img });
-
-  fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
-
-  res.json({
-    success: true,
-    cartLength: cart.length
-  });
 };
 
 // Get cart
-exports.getCart = (req, res) => {
-
-  let cart = [];
-
-  if (fs.existsSync(cartFile)) {
-    try {
-      cart = JSON.parse(fs.readFileSync(cartFile, "utf-8"));
-    } catch {
-      cart = [];
-    }
+exports.getCart = async (req, res, next) => {
+  try {
+    const cart = await Cart.find();
+    res.json(cart);
+  } catch (err) {
+    next(err);
   }
-
-  res.json(cart);
 };
 
 // Clear cart
-exports.clearCart = (req, res) => {
-
-  fs.writeFileSync(cartFile, JSON.stringify([], null, 2));
-
-  res.json({ success: true });
+exports.clearCart = async (req, res, next) => {
+  try {
+    await Cart.deleteMany();
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // Remove item
-exports.removeFromCart = (req, res) => {
-
-  const index = parseInt(req.params.index);
-
-  let cart = [];
-
-  if (fs.existsSync(cartFile)) {
-    cart = JSON.parse(fs.readFileSync(cartFile));
+exports.removeFromCart = async (req, res, next) => {
+  try {
+    await Cart.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
   }
-
-  if (index >= 0 && index < cart.length) {
-    cart.splice(index, 1);
-  }
-
-  fs.writeFileSync(cartFile, JSON.stringify(cart, null, 2));
-
-  res.json({ success: true });
 };
