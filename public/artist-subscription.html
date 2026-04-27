@@ -336,11 +336,14 @@ required />
   }
 
   try {
-    const response = await fetch('/subscribe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+    const token = localStorage.getItem("token");
+
+const response = await fetch('/subscribe', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token  
+  },
       body: JSON.stringify({
         fullname: name,
         email: email,
