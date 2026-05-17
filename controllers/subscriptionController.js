@@ -1,30 +1,44 @@
-const Subscription = require("../models/Subscription");
+
+const prisma = require("../database/prisma");
 
 exports.subscribeArtist = async (req, res, next) => {
   try {
+
     const { payment } = req.body;
 
-    const userId = req.user.id;   // from JWT
+    // From JWT middleware
+    const userId = req.user.id;
     const email = req.user.email;
 
-    const existing = await Subscription.findOne({ email });
+    // Check existing subscription
+    const existing = await prisma.subscription.findFirst({
+      where: {
+        email,
+      },
+    });
 
     if (existing) {
-      return res.json({ message: "Already subscribed" });
+      return res.json({
+        message: "Already subscribed",
+      });
     }
 
-    const newSub = await Subscription.create({
-      userId,
-      email,
-      payment
+    // Create subscription
+    const newSub = await prisma.subscription.create({
+      data: {
+        userId: String(userId),
+        email,
+        payment,
+      },
     });
 
     res.json({
       success: true,
-      data: newSub
+      data: newSub,
     });
 
   } catch (err) {
     next(err);
   }
 };
+

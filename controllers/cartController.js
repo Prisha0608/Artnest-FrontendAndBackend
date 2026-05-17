@@ -1,58 +1,91 @@
-const Cart = require("../models/Cart");
+const prisma = require("../database/prisma");
 
-// Add item
+
+// ================= ADD TO CART =================
+
 exports.addToCart = async (req, res, next) => {
   try {
-    const item = await Cart.create(req.body);
-    const count = await Cart.countDocuments();
+
+    const { name, price, img } = req.body;
+
+    const item = await prisma.cart.create({
+      data: {
+        name,
+        price: Number(price),
+        img,
+      },
+    });
+
+    const count = await prisma.cart.count();
 
     res.json({
       success: true,
       cartLength: count,
-      item
+      item,
     });
+
   } catch (err) {
     next(err);
   }
 };
 
-// Get cart
+
+// ================= GET CART =================
+
 exports.getCart = async (req, res, next) => {
   try {
-    const cart = await Cart.find();
+
+    const cart = await prisma.cart.findMany();
+
     res.json(cart);
+
   } catch (err) {
     next(err);
   }
 };
 
-// Clear cart
+
+// ================= CLEAR CART =================
+
 exports.clearCart = async (req, res, next) => {
   try {
-    await Cart.deleteMany();
-    res.json({ success: true });
+
+    await prisma.cart.deleteMany();
+
+    res.json({
+      success: true,
+    });
+
   } catch (err) {
     next(err);
   }
 };
 
-// Remove item
-const mongoose = require("mongoose"); // add at top
+
+// ================= REMOVE ITEM =================
 
 exports.removeFromCart = async (req, res, next) => {
   try {
-    const id = req.params.id;
 
-    // ✅ check valid MongoDB ID
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    const id = Number(req.params.id);
+
+    // Prisma uses Int IDs
+    if (isNaN(id)) {
       return res.status(400).json({
-        error: "Invalid ID"
+        error: "Invalid ID",
       });
     }
 
-    await Cart.findByIdAndDelete(id);
+    await prisma.cart.delete({
+      where: {
+        id,
+      },
+    });
 
-    res.json({ success: true });
+    res.json({
+      success: true,
+    });
+
   } catch (err) {
     next(err);
   }
